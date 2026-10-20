@@ -15,7 +15,6 @@ pack/mobs.zip.001, mobs.zip.002             <- pack cũ, chỉ dùng khi chọn 
 tools/build_web_data.py                     <- tách dữ liệu theo tab từ ZIP nguồn
 tools/make_pack.py                           <- tạo pack ZIP cũ cho chế độ tương thích
 names.json      (tuỳ chọn) tên hiển thị trong game cho mọi người
-layouts.json    (tuỳ chọn) bố cục lắp ráp mảnh dùng chung
 ```
 
 ## Đưa lên GitHub Pages (miễn phí)
@@ -68,7 +67,7 @@ Sau khi chạy `python3 tools/build_web_data.py`, mở `pack/data/names.json` đ
 ```
 Chỉ cần sửa giá trị, giữ nguyên các ID. Chạy lại generator để cập nhật manifest/build ID; tên đã điền sẽ được bảo toàn nếu ID còn trong pack. Upload lại `pack/data/`. Tên do người dùng nhập trực tiếp trong web vẫn có ưu tiên cao hơn tên trong file này.
 
-Các công cụ sao lưu tên trong UI hiện có vẫn dùng `names.json` phẳng tùy chọn cạnh `index.html`; không thay file đó bằng schema grouped `pack/data/names.json`.
+Các công cụ nhập/xuất tên trong UI vẫn dùng `names.json` phẳng tùy chọn cạnh `index.html`; file đó chỉ override nhãn Model, không thay schema grouped `pack/data/names.json`.
 
 ## Lưu ý
 - Mỗi người dùng tải ~29 MB lần đầu (trình duyệt/CDN cache cho lần sau). GitHub Pages có giới hạn băng thông mềm ~100 GB/tháng ≈ 3.000 lượt tải lần đầu.

@@ -32,7 +32,7 @@ aside{width:440px;min-width:320px;flex:0 0 440px;min-height:0;display:flex;flex-
 .tools input[type=number]{width:52px}
 #count{padding:6px 10px;color:var(--mt);font-size:12px;border-bottom:1px solid var(--bd)}
 #list{flex:1;overflow:auto}
-.fam{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--p2);border-bottom:1px solid var(--bd);cursor:pointer;position:sticky;top:0;z-index:1}
+.fam{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--p2);border-bottom:1px solid var(--bd);cursor:pointer}
 .fam small{color:var(--mt)}.arr{width:12px;color:var(--mt)}
 .row{display:grid;grid-template-columns:20px 1fr;gap:2px 8px;padding:5px 10px 5px 26px;border-bottom:1px solid #20242c;cursor:pointer}
 .row:hover{background:#222733}.row.cur{background:#1f3556}
@@ -58,10 +58,6 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
 .tbody{height:180px;background:transparent}
 .tfoot{padding:3px 8px;background:var(--p2);font-size:11px;color:var(--mt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vtools select{padding:3px 6px}
-#editor{display:none;gap:8px;flex-wrap:wrap;align-items:center;padding:6px 12px;border-top:1px solid var(--bd);background:var(--p)}
-#editor input[type=number]{width:64px;padding:3px 5px}
-#editor label{color:var(--mt);font-size:12px;display:flex;align-items:center;gap:3px}
-#parts button.sel{border-color:#ffd43b;color:#ffd43b}
 #loader{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));overflow:auto}
 .lcard{width:min(640px,100%);background:var(--p);border:1px solid var(--bd);border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:14px}
 .lcard h2{margin:0;font-size:20px}.lcard p{margin:0;color:var(--mt)}
@@ -76,7 +72,7 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
 #toast{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));max-width:min(420px,calc(100vw - 32px));background:#0d2a1d;border:1px solid var(--ok);color:#c9f7e0;padding:10px 14px;border-radius:8px;display:none;white-space:pre-line;z-index:60}
 #toast.err{background:#33191b;border-color:#e5484d;color:#ffd5d6}
 #itemView,#soundView{display:none;flex:1;min-width:0;min-height:0;overflow:auto;padding:14px max(14px,env(safe-area-inset-left)) max(20px,env(safe-area-inset-bottom))}
-.data-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:sticky;top:-14px;padding:10px 0;background:var(--bg);z-index:4;border-bottom:1px solid var(--bd)}
+.data-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--bd)}
 .data-toolbar input[type=search]{flex:1 1 240px;min-width:0}
 .data-toolbar progress{width:100%;height:8px;accent-color:var(--ac)}
 .data-status{padding:12px 2px;color:var(--mt);min-height:42px}
@@ -113,19 +109,19 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
   .vtools>span[style*="--bd"]{display:none}
   .vtools select{min-height:34px}
   #stage{min-height:48dvh;flex:1 0 48dvh}
-  #parts{max-height:112px;padding-bottom:max(8px,env(safe-area-inset-bottom))}
-  #editor{gap:6px;padding:8px;align-items:flex-start}
-  #editor b{flex:1 1 100%;min-width:0!important}
+  #parts{max-height:none;overflow:visible;padding-bottom:max(8px,env(safe-area-inset-bottom))}
   #info{padding:8px 10px}
   #gbar{gap:5px;padding:7px;}
   #gwrap{grid-template-columns:repeat(auto-fill,minmax(min(155px,100%),1fr));grid-auto-rows:218px;padding:7px;gap:7px}
+  .gallery-view #stage{flex:0 0 auto;height:auto;min-height:0;overflow:visible}
+  .gallery-view #gallery{position:relative;inset:auto;display:flex;min-height:0;overflow:visible}
+  .gallery-view #gwrap{flex:0 0 auto;overflow:visible}
   .tile{height:218px}
   .tbody{height:167px}
   .lcard{padding:18px 16px;max-height:100%;overflow:auto}
   #drop{padding:16px 10px}
   #lbtns button{flex:1 1 auto}
-  #itemView,#soundView{padding:8px 10px max(20px,env(safe-area-inset-bottom))}
-  .data-toolbar{top:-8px}
+  #itemView,#soundView{flex:0 0 auto;min-height:auto;overflow:visible;padding:8px 10px max(20px,env(safe-area-inset-bottom))}
   .data-list{grid-template-columns:minmax(0,1fr)}
   .sound-row{grid-template-columns:minmax(0,1fr) auto}
   .sound-row .sound-meta{grid-column:1/-1}
@@ -151,7 +147,6 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
   <button id="btnImport" class="model-only" title="Đọc tên từ file .yml MythicMobs / names.txt / .json">Nhập tên…</button>
   <input type="file" id="file" multiple hidden accept=".yml,.yaml,.txt,.json">
   <button id="btnExpN" class="model-only" title="Tải names.json (tên bạn đã đặt) để sao lưu / chia sẻ">Xuất tên</button>
-  <button id="btnExpL" class="model-only" title="Tải layouts.json (bố cục tự xếp) để sao lưu / chia sẻ">Xuất bố cục</button>
   <a class="navlink" href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="Thanks, mở GitHub ở tab mới" title="Thanks">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10m0 0 4-4m-4 4-4-4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg><span>Thanks</span>
   </a>
@@ -184,7 +179,6 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
     <label><input type="radio" name="mode" value="grid" checked> Tách từng mảnh</label>
     <label><input type="radio" name="mode" value="overlay"> Ghép chồng</label>
     <label><input type="radio" name="mode" value="assembled"> Lắp ráp theo blueprint</label>
-    <label><input type="radio" name="mode" value="manual"> Tự xếp (chỉnh tay)</label>
     <button id="btnBp" title="Nạp file .bbmodel hoặc .zip chứa nhiều .bbmodel (thư mục plugins/ModelEngine/blueprints của server)">Nạp blueprint…</button>
     <input type="file" id="bpfile" multiple hidden accept=".bbmodel,.json,.zip">
     <label><input type="checkbox" id="bprot" checked> xoay bone</label>
@@ -201,15 +195,6 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
       <span style="color:var(--mt);font-size:12px">Rê chuột vào ô để xoay · bấm vào hình để xem chi tiết</span></div>
       <div id="gwrap"></div></div></div>
   <div id="parts"></div>
-  <div id="editor">
-    <b id="edname" style="min-width:170px">Chọn một mảnh (bấm vào hình hoặc tên mảnh)</b>
-    <label>X<input type="number" id="ex" step="0.5"></label><label>Y<input type="number" id="ey" step="0.5"></label><label>Z<input type="number" id="ez" step="0.5"></label>
-    <label>Xoay X<input type="number" id="erx" step="5"></label><label>Y<input type="number" id="ery" step="5"></label><label>Z<input type="number" id="erz" step="5"></label>
-    <button id="edpreset" title="Đặt các mảnh theo bộ xương người chuẩn (đoán theo tên mảnh) rồi chỉnh tiếp">Đoán theo bộ xương người</button>
-    <button id="edbp" title="Lấy vị trí từ blueprint đã nạp để chỉnh tiếp">Lấy từ blueprint</button>
-    <button id="edreset">Đặt lại</button><button id="edsave" class="primary">Lưu bố cục</button><button id="eddel">Xóa bố cục đã lưu</button>
-    <span id="edmsg" style="color:var(--mt);font-size:12px"></span>
-  </div>
   <div id="info">Bấm vào một dòng bên trái để xem model. Kéo chuột trái = xoay, chuột phải/Shift = dời, lăn chuột = zoom.</div>
 </section>
 </main>
@@ -247,7 +232,7 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
 const LOCAL=(()=>{
 const TD=new TextDecoder(),TE=new TextEncoder();
 const ATLAS=['ia_overlay_legacy_atlas/assets/minecraft/atlases/blocks.json','ia_overlay_modern_atlas/assets/minecraft/atlases/blocks.json','ia_overlay_modern_atlas/assets/minecraft/atlases/items.json'];
-const S={pk:null,it:null,ids:new Map(),amap:{},tsize:{},intem:new Set(),missing:new Set(),names:{},bps:new Map(),lays:new Map(),last:null};
+const S={pk:null,it:null,ids:new Map(),amap:{},tsize:{},intem:new Set(),missing:new Set(),names:{},bps:new Map(),last:null};
 const DATA_ROOT='pack/data/',BLUEPRINT_URL='pack/blueprint.json';
 const jsonCache=new Map(),byteCache=new Map(),pinnedJson=new Set(['version.json','models/index.json','items/index.json','sounds/index.json','names.json']);
 let modelIndexPromise=null,itemIndexPromise=null,soundIndexPromise=null,blueprintPromise=null,staticVersion=null,packNamesPromise=null,packNames={};
@@ -497,13 +482,11 @@ async function loadFiles(full,item,remember,onp){
   onp(1,'Xong');
 }
 async function loadUserData(){
-  S.names={};S.bps=new Map();S.lays=new Map();
+  S.names={};S.bps=new Map();
   const low=o=>Object.fromEntries(Object.entries(o||{}).map(([k,v])=>[k.toLowerCase(),String(v)]));
   try{const r=await fetch('names.json');if(r.ok)Object.assign(S.names,low(await r.json()));}catch(e){}
-  try{const r=await fetch('layouts.json');if(r.ok){const d=await r.json();for(const k in d)S.lays.set(k.toLowerCase(),d[k]);}}catch(e){}
   Object.assign(S.names,low(await kvGet('names')));
   for(const k of await kvKeys('bp:'))S.bps.set(k.slice(3),await kvGet(k));
-  for(const k of await kvKeys('lay:'))S.lays.set(k.slice(4),await kvGet(k));
 }
 
 /* ---------- tên hiển thị: .yml MythicMobs / .txt / .json ---------- */
@@ -622,11 +605,11 @@ async function route(u,o){
       const data=await getModelIndex(),blueprint=await getHostedBlueprint(),byId=new Map((blueprint||[]).map(x=>[x.id,x]));
       const ids=data.ids.map(x=>({...x,fam:byId.get(x.id)?.group||x.fam||x.id.split(/[_-]/)[0]}));
       ids.sort((a,b)=>{const ax=byId.get(a.id),bx=byId.get(b.id);if(ax&&bx)return ax.order-bx.order||a.id.localeCompare(b.id);if(ax)return-1;if(bx)return 1;return a.id.localeCompare(b.id);});
-      return{ids,res:data.res,names:S.names,outName:'VanGioi_Mobs_Pack.zip',bps:[...S.bps.keys()],layouts:[...S.lays.keys()]};
+      return{ids,res:data.res,names:S.names,outName:'VanGioi_Mobs_Pack.zip',bps:[...S.bps.keys()]};
     }
     const res=Object.keys(S.tsize).sort(),idx=new Map(res.map((r,i)=>[r,i]));
     return{ids:[...S.ids].map(([id,e])=>({id,parts:e.models.length,mb:e.mbytes,res:[...e.res].filter(r=>idx.has(r)).map(r=>idx.get(r)).sort((a,b)=>a-b)})),
-      res:res.map(r=>({r,b:S.tsize[r]||0})),names:S.names,outName:'VanGioi_Mobs_Pack.zip',bps:[...S.bps.keys()].sort(),layouts:[...S.lays.keys()].sort()};
+      res:res.map(r=>({r,b:S.tsize[r]||0})),names:S.names,outName:'VanGioi_Mobs_Pack.zip',bps:[...S.bps.keys()].sort()};
   }
   if(path==='/api/model'){
     if(!S.pk){
@@ -657,12 +640,6 @@ async function route(u,o){
     }
     return saveBP(body.name,body.text||'');
   }
-  if(path==='/api/layout'){
-    if(body.id===undefined){const l=S.lays.get((q.id||'').toLowerCase());if(!l)throw new Error('chưa có bố cục');return l;}
-    const id=String(body.id).toLowerCase();
-    if(body.parts==null){S.lays.delete(id);await kvDel('lay:'+id);}else{const l={parts:body.parts};S.lays.set(id,l);await kvSet('lay:'+id,l);}
-    return{ok:true};
-  }
   if(path==='/api/build'){
     const sel=(body.ids||[]).filter(i=>S.ids.has(i));if(!sel.length)throw new Error('chưa chọn model nào');
     await yieldUI();const data=S.pk?buildZip(sel.sort()):await buildStaticZip(sel.sort()),name=safeName(body.filename);
@@ -673,7 +650,6 @@ async function route(u,o){
 function saveBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);}
 const download=()=>S.last&&saveBlob(S.last.blob,S.last.name);
 const exportNames=()=>saveBlob(new Blob([JSON.stringify(S.names,null,1)],{type:'application/json'}),'names.json');
-const exportLayouts=()=>saveBlob(new Blob([JSON.stringify(Object.fromEntries(S.lays),null,1)],{type:'application/json'}),'layouts.json');
 
 /* ---------- tải pack từ chính host (cùng chỗ với web) ---------- */
 const PACK_SINGLE=['pack/mobs.zip','pack/VanGioi_Full_Pack.zip'];
@@ -760,7 +736,7 @@ async function boot(start){
   if(noauto){showManual('Bạn đã chọn nạp pack riêng. Có thể chọn file bên dưới hoặc thử tải lại pack từ host.');$('#retryHost').style.display='inline-block';return;}
   await attemptHosted();
 }
-return{route,texture,download,exportNames,exportLayouts,boot,ensureVersion,getModelIndex,getItemIndex,getSoundIndex,
+return{route,texture,download,exportNames,boot,ensureVersion,getModelIndex,getItemIndex,getSoundIndex,
   getItemGroup:id=>dataJson('items/'+id+'.json'),getVersion:ensureVersion,getBuildId:()=>staticVersion&&staticVersion.buildId||'',displayName};
 })();
 
@@ -913,7 +889,7 @@ $('#soundRetry').onclick=()=>{soundState.index=null;soundState.error='';loadSoun
 $('#modelRetry').onclick=()=>{modelInitPromise=null;$('#modelRetry').hidden=true;setTab('model');};
 
 async function init(){
-  D=await j('/api/list');D.bps=new Set(D.bps||[]);D.lays=new Set(D.layouts||[]);names=D.names||{};$('#outname').value=D.outName;
+  D=await j('/api/list');D.bps=new Set(D.bps||[]);names=D.names||{};$('#outname').value=D.outName;
   D.byId={};D.ids.forEach(x=>{x.fam=x.fam||famOf(x.id);x.kb=x.mb+x.res.reduce((a,i)=>a+D.res[i].b,0);D.byId[x.id]=x;});
   sel=new Set([...sel].filter(i=>D.byId[i]));
   render();
@@ -972,7 +948,6 @@ $('#selvis').onclick=()=>{for(const m of groups.values())m.forEach(x=>sel.add(x.
 $('#clr').onclick=()=>{sel.clear();saveSel();render();};
 $('#btnChange').onclick=()=>{sessionStorage.setItem('vg_noauto','1');location.reload();};
 $('#btnExpN').onclick=()=>{saveNames().then(()=>LOCAL.exportNames());};
-$('#btnExpL').onclick=()=>LOCAL.exportLayouts();
 $('#btnImport').onclick=()=>$('#file').click();
 $('#file').onchange=async e=>{
   const files=[...e.target.files];if(!files.length)return;
@@ -1102,7 +1077,7 @@ async function fetchParts(id,onlyPart=null){
   m.parts.forEach(p=>Object.values(p.json.textures||{}).forEach(v=>{if(typeof v==='string'&&v[0]!=='#')rs.add(v);}));
   const texs={},resources=[...rs];
   for(let i=0;i<resources.length;i+=6)await Promise.all(resources.slice(i,i+6).map(async r=>texs[r]=await loadTex(r)));
-  const out=[];m.parts.forEach(p=>{const b=buildPart(p.json,texs);if(b){b.name=p.name;b.visible=true;b.tf={pos:[0,0,0],rot:[0,0,0]};if(onlyPart)applyItemDisplay(b,p.json.display);out.push(b);}});
+  const out=[];m.parts.forEach(p=>{const b=buildPart(p.json,texs);if(b){b.name=p.name;b.visible=true;if(onlyPart)applyItemDisplay(b,p.json.display);out.push(b);}});
   return{parts:out,texCount:rs.size,missing:[...rs].filter(r=>!texs[r]).length};
 }
 function disposeGroup(g){g.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose();});}
@@ -1128,36 +1103,6 @@ function bpMats(tree){
   (tree||[]).forEach(n=>walk(n,new THREE.Matrix4()));
   return m;
 }
-const RAD=Math.PI/180;
-function manMat(tf){
-  const R=new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(tf.rot[0]*RAD,tf.rot[1]*RAD,tf.rot[2]*RAD,'ZYX'));
-  return new THREE.Matrix4().makeTranslation(tf.pos[0]+8,tf.pos[1]+8,tf.pos[2]+8).multiply(R).multiply(new THREE.Matrix4().makeTranslation(-8,-8,-8));
-}
-function tfFromMat(M){
-  const e=M.elements,R=new THREE.Matrix4().extractRotation(M),re=R.elements;
-  const pos=[e[12]+re[0]*8+re[4]*8+re[8]*8-8,e[13]+re[1]*8+re[5]*8+re[9]*8-8,e[14]+re[2]*8+re[6]*8+re[10]*8-8];
-  const eu=new THREE.Euler().setFromRotationMatrix(R,'ZYX'),r2=v=>Math.round(v*100)/100;
-  return{pos:pos.map(r2),rot:[eu.x/RAD,eu.y/RAD,eu.z/RAD].map(r2)};
-}
-function applyLay(list,lay){list.forEach(p=>{const t=lay&&lay.parts&&lay.parts[p.name];p.tf=t?{pos:t.pos.slice(),rot:t.rot.slice()}:{pos:[0,0,0],rot:[0,0,0]};});}
-/* bộ xương người chuẩn (đoán): [pivot, cha] */
-const SK={body:[[0,12,0],null],head:[[0,24,0],'body'],hat:[[0,28,0],'head'],hair:[[0,26,0],'head'],
- leftarm:[[6,22,0],'body'],rightarm:[[-6,22,0],'body'],leftforearm:[[6,16,0],'leftarm'],rightforearm:[[-6,16,0],'rightarm'],
- lefthand:[[6,10,0],'leftforearm'],righthand:[[-6,10,0],'rightforearm'],
- leftleg:[[2,12,0],'body'],rightleg:[[-2,12,0],'body'],leftfoot:[[2,3,0],'leftleg'],rightfoot:[[-2,3,0],'rightleg'],
- leftwing:[[3,22,3],'body'],rightwing:[[-3,22,3],'body'],tail:[[0,10,3],'body'],cape:[[0,22,3],'body']};
-function skKey(name,id){
-  let k=bn(name).replace(/_/g,'');
-  if(k===bn(id).replace(/_/g,'')||['torso','chest','root','main'].includes(k))return'body';
-  k=k.replace(/^l(?=arm|leg|hand|foot|forearm|wing)/,'left').replace(/^r(?=arm|leg|hand|foot|forearm|wing)/,'right');
-  k=k.replace(/^(left|right)(upperarm|shoulder)$/,'$1arm').replace(/^(left|right)(lowerarm)$/,'$1forearm');
-  return SK[k]?k:null;
-}
-function skTree(){
-  const mk=k=>({name:k,origin:SK[k][0],rotation:[0,0,0],children:Object.keys(SK).filter(c=>SK[c][1]===k).map(mk)});
-  return[mk('body')];
-}
-
 /* đặt các mảnh theo chế độ; trả về số mảnh không có trong blueprint */
 function placeParts(list,mode,tree){
   const vis=list.filter(p=>p.visible);let unplaced=0;
@@ -1165,8 +1110,6 @@ function placeParts(list,mode,tree){
   if(mode==='grid'){
     const step=Math.max(16,...vis.map(p=>p.size))*1.2,cols=Math.max(1,Math.ceil(Math.sqrt(vis.length)));
     vis.forEach((p,i)=>p.group.position.set((i%cols)*step-p.center.x+8,-p.center.y+Math.min(p.size,16)/2,Math.floor(i/cols)*step-p.center.z+8));
-  }else if(mode==='manual'){
-    list.forEach(p=>{p.group.matrixAutoUpdate=false;p.group.matrix.copy(manMat(p.tf));p.group.matrixWorldNeedsUpdate=true;});
   }else if(mode==='assembled'&&tree){
     const mats=bpMats(tree);
     list.forEach(p=>{const M=mats.get(bn(p.name));
@@ -1185,9 +1128,9 @@ async function preview(id,onlyPart=null){
   cur=id;document.querySelectorAll('.row').forEach(r=>r.classList.toggle('cur',r.dataset.id===id));
   const my=++token;$('#info').textContent='Đang tải '+(onlyPart?onlyPart+' · ':'')+id+'…';
   try{
-    const r=await fetchParts(id,onlyPart);curBP=onlyPart?null:await getBP(id);const lay=onlyPart?null:await getLay(id);
+    const r=await fetchParts(id,onlyPart);curBP=onlyPart?null:await getBP(id);
     if(my!==token)return;
-    clearParts();parts=r.parts;selPart=null;applyLay(parts,lay);parts.forEach(p=>root.add(p.group));
+    clearParts();parts=r.parts;parts.forEach(p=>root.add(p.group));
     layout(true);renderChips();
     const nm=names[id]||LOCAL.displayName('models',id);
     infoBase=`${onlyPart?'Item '+onlyPart+' · preview theo display.gui · ':''}${nm} — ${parts.length} mảnh có hình, ${r.texCount} texture${r.missing?`, ${r.missing} texture thiếu (hiện màu tím)`:''}. `;
@@ -1200,16 +1143,14 @@ function updInfo(){
   if(m==='assembled'){t+=curBP?(lastUnplaced?`Đã lắp theo blueprint; ${lastUnplaced} mảnh không có trong blueprint (nằm ở gốc). `:'Đã lắp theo blueprint. '):
     'Chưa có blueprint cho model này — bấm "Nạp blueprint…" (file .bbmodel). ';
     t+='Nếu lệch, thử đổi "xoay bone" / "tâm (8,8,8)".';}
-  else if(m==='manual')t+='Bấm vào mảnh trên hình (hoặc tên mảnh bên dưới) rồi chỉnh X/Y/Z và góc xoay; hoặc bấm "Đoán theo bộ xương người" / "Lấy từ blueprint" để có điểm xuất phát. Nhớ "Lưu bố cục". ';
-  else t+='Vị trí lắp ráp do blueprint ModelEngine quyết định; chọn "Lắp ráp theo blueprint" sau khi nạp file .bbmodel.';
+  else t+='Tách từng mảnh hoặc ghép chồng; để lắp đúng vị trí, nạp blueprint ModelEngine rồi chọn "Lắp ráp theo blueprint".';
   $('#info').textContent=t;
 }
 function layout(fit){
   const mode=curMode();let eff=mode;
   if(mode==='assembled'&&!curBP)eff='overlay';
-  $('#editor').style.display=(view==='single'&&mode==='manual')?'flex':'none';
   lastUnplaced=placeParts(parts,eff,curBP);
-  boxLine.visible=$('#frame').checked&&eff!=='grid';grid.visible=eff!=='grid';updSel();
+  boxLine.visible=$('#frame').checked&&eff!=='grid';grid.visible=eff!=='grid';
   if(fit)fitCam();
   const hud=$('#hud');hud.innerHTML='';labelEls=[];
   if(eff==='grid')parts.filter(p=>p.visible).forEach(p=>{const s=document.createElement('span');s.textContent=p.name;hud.appendChild(s);labelEls.push([s,p]);});
@@ -1225,10 +1166,7 @@ function renderChips(){
   const mk=(t,fn,cls)=>{const b=document.createElement('button');b.textContent=t;if(cls)b.className=cls;b.onclick=fn;w.appendChild(b);return b;};
   mk('Hiện hết',()=>{parts.forEach(p=>p.visible=true);layout(true);renderChips();});
   mk('Ẩn hết',()=>{parts.forEach(p=>p.visible=false);layout();renderChips();});
-  parts.forEach(p=>{const b=mk(p.name,e=>{
-    if(curMode()==='manual'&&!e.shiftKey){selectPart(p);renderChips();return;}
-    p.visible=!p.visible;layout();renderChips();},(p.visible?'':'off')+(p===selPart?' sel':''));
-    b.title=curMode()==='manual'?'Bấm: chọn mảnh · Shift+bấm: ẩn/hiện':'Bấm: ẩn/hiện';});
+  parts.forEach(p=>{const b=mk(p.name,()=>{p.visible=!p.visible;layout();renderChips();},p.visible?'':'off');b.title='Bấm: ẩn/hiện';});
 }
 
 /* ----------------------------------------------- thư viện (nhiều model) */
@@ -1253,13 +1191,13 @@ function buildGallery(resetPage){
 async function loadTile(t){
   try{
     const r=await fetchParts(t.id);if(t.dead){r.parts.forEach(p=>disposeGroup(p.group));return;}
-    t.bp=await getBP(t.id);t.lay=await getLay(t.id);applyLay(r.parts,t.lay);t.parts=r.parts;r.parts.forEach(p=>t.scene.add(p.group));
+    t.bp=await getBP(t.id);t.parts=r.parts;r.parts.forEach(p=>t.scene.add(p.group));
     t.loaded=true;layoutTile(t);
   }catch(e){}
   gal.dirty=true;
 }
 function layoutTile(t){
-  const m=curMode(),eff=(m==='assembled'&&t.bp)?'assembled':(m==='manual'&&t.lay)?'manual':(m==='overlay'?'overlay':'grid');
+  const m=curMode(),eff=(m==='assembled'&&t.bp)?'assembled':(m==='overlay'?'overlay':'grid');
   placeParts(t.parts,eff,t.bp);t.scene.updateMatrixWorld(true);
   const b=boxOf(t.parts);if(!b)return;const c=b.getCenter(new THREE.Vector3()),s=b.getSize(new THREE.Vector3());
   t.o.t.copy(c);t.o.d=Math.max(14,Math.max(s.x,s.y,s.z)*((m==='grid'&&eff==='grid')?1.3:1.9));
@@ -1284,6 +1222,7 @@ function galRender(){
 }
 function setView(v){
   view=v;const g=v==='gallery';
+  document.body.classList.toggle('gallery-view',g);
   $('#gallery').style.display=g?'flex':'none';$('#parts').style.display=g?'none':'flex';$('#hud').style.display=g?'none':($('#labels').checked?'block':'none');
   if(g){gal.sig=filterSig();buildGallery(false);}
   else{disposeTiles();if(cur)preview(cur);}
@@ -1307,67 +1246,7 @@ $('#gnext').onclick=()=>pageTo(gal.page+1);$('#glast').onclick=()=>pageTo(1e6);
 $('#gsize').onchange=e=>{gal.size=+e.target.value;buildGallery(true);};
 $('#gtickpage').onclick=()=>{gal.tiles.forEach(t=>sel.add(t.id));saveSel();syncTiles();updateCount();render();};
 document.querySelectorAll('input[name=view]').forEach(r=>r.onchange=()=>setView(r.value));
-
-/* ----------------------------------------------- bố cục tự xếp + chỉnh tay */
-const layCache=new Map();
-async function getLay(id){
-  if(!D.lays.has(id))return null;
-  if(!layCache.has(id))layCache.set(id,await j('/api/layout?id='+encodeURIComponent(id)));
-  return layCache.get(id);
-}
-let selPart=null;
-const selBox=new THREE.Box3Helper(new THREE.Box3(),0xffd43b);selBox.visible=false;scene.add(selBox);
-function updSel(){
-  if(!selPart||view!=='single'||curMode()==='grid'&&false){selBox.visible=false;return;}
-  root.updateMatrixWorld(true);selBox.box.setFromObject(selPart.group);selBox.visible=selPart.visible;
-}
-function selectPart(p){selPart=p;fillEditor();updSel();}
-function fillEditor(){
-  const ids=['ex','ey','ez','erx','ery','erz'];
-  if(!selPart){$('#edname').textContent='Chọn một mảnh (bấm vào hình hoặc tên mảnh)';ids.forEach(i=>$('#'+i).value='');return;}
-  $('#edname').textContent='Mảnh: '+selPart.name;
-  [...selPart.tf.pos,...selPart.tf.rot].forEach((v,i)=>$('#'+ids[i]).value=v);
-}
-['ex','ey','ez','erx','ery','erz'].forEach((id,i)=>$('#'+id).oninput=e=>{
-  if(!selPart)return;const v=parseFloat(e.target.value)||0;
-  if(i<3)selPart.tf.pos[i]=v;else selPart.tf.rot[i-3]=v;
-  selPart.group.matrixAutoUpdate=false;selPart.group.matrix.copy(manMat(selPart.tf));selPart.group.matrixWorldNeedsUpdate=true;updSel();
-});
-function edMsg(t){$('#edmsg').textContent=t;clearTimeout(edMsg.t);edMsg.t=setTimeout(()=>$('#edmsg').textContent='',6000);}
-$('#edpreset').onclick=()=>{
-  const mats=bpMats(skTree());let n=0;
-  parts.forEach(p=>{const k=skKey(p.name,cur),M=k&&mats.get(k);if(M){p.tf=tfFromMat(M);n++;}});
-  layout(true);fillEditor();edMsg(`Đã đặt ${n}/${parts.length} mảnh theo bộ xương người (đoán). Các mảnh còn lại chưa biết vị trí - tự chỉnh tay.`);
-};
-$('#edbp').onclick=()=>{
-  if(!curBP)return edMsg('Chưa có blueprint cho model này - bấm "Nạp blueprint…".');
-  const mats=bpMats(curBP);let n=0;
-  parts.forEach(p=>{const M=mats.get(bn(p.name));if(M){p.tf=tfFromMat(M);n++;}});
-  layout(true);fillEditor();edMsg(`Đã lấy ${n}/${parts.length} mảnh từ blueprint.`);
-};
-$('#edreset').onclick=()=>{parts.forEach(p=>p.tf={pos:[0,0,0],rot:[0,0,0]});layout(true);fillEditor();};
-$('#edsave').onclick=async()=>{
-  if(!cur)return;const o={};parts.forEach(p=>{if(p.tf.pos.some(v=>v)||p.tf.rot.some(v=>v))o[p.name]={pos:p.tf.pos,rot:p.tf.rot};});
-  try{await j('/api/layout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:cur,parts:o})});
-    D.lays.add(cur);layCache.set(cur,{parts:o});edMsg(`Đã lưu bố cục (${Object.keys(o).length} mảnh) trên trình duyệt này (nút "Xuất bố cục" để sao lưu).`);}catch(e){edMsg('Lỗi lưu: '+e.message);}
-};
-$('#eddel').onclick=async()=>{
-  if(!cur)return;try{await j('/api/layout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:cur,parts:null})});
-    D.lays.delete(cur);layCache.delete(cur);edMsg('Đã xóa bố cục đã lưu.');}catch(e){edMsg('Lỗi: '+e.message);}
-};
-/* bấm vào hình để chọn mảnh */
-const ray=new THREE.Raycaster(),mv=new THREE.Vector2();let dn=null;
-cv.addEventListener('pointerdown',e=>dn=[e.clientX,e.clientY]);
-cv.addEventListener('pointerup',e=>{
-  if(!dn||view!=='single'||curMode()!=='manual')return;
-  if(Math.hypot(e.clientX-dn[0],e.clientY-dn[1])>4)return;
-  const r=cv.getBoundingClientRect();mv.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);
-  ray.setFromCamera(mv,cam);root.updateMatrixWorld(true);
-  const hit=ray.intersectObjects(root.children,true).find(h=>h.object.visible);
-  if(!hit){selPart=null;fillEditor();updSel();renderChips();return;}
-  let o=hit.object;while(o&&o.parent!==root)o=o.parent;
-  const p=parts.find(q=>q.group===o);if(p){selectPart(p);renderChips();}
-});
+document.querySelectorAll('input[name=mode]').forEach(r=>r.onchange=()=>{view==='gallery'?relayoutTiles():layout(true);});
 
 /* ----------------------------------------------- điều khiển chung */
 function setSide(hide,persist=true){
@@ -1387,7 +1266,6 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.class
 const sideQuery=matchMedia('(max-width: 760px)');
 sideQuery.addEventListener('change',e=>{let hidden=false;try{hidden=localStorage.getItem('vg_hide')==='1';}catch(x){}setSide(e.matches?true:hidden,false);});
 try{setSide(matchMedia('(max-width: 760px)').matches?true:localStorage.getItem('vg_hide')==='1',false);}catch(e){setSide(matchMedia('(max-width: 760px)').matches,true);}
-document.querySelectorAll('input[name=mode]').forEach(r=>r.onchange=()=>{view==='gallery'?relayoutTiles():layout(true);});
 $('#bprot').onchange=$('#bp8').onchange=()=>{view==='gallery'?relayoutTiles():layout(true);};
 $('#frame').onchange=()=>layout();$('#refit').onclick=()=>fitCam();
 $('#labels').onchange=()=>{$('#hud').style.display=$('#labels').checked&&view==='single'?'block':'none';};
