@@ -1,47 +1,37 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'">
 <title>VanGioi Mob Studio</title>
 <style>
 :root{--bg:#14161a;--p:#1d2026;--p2:#252932;--bd:#323846;--tx:#e6e9ef;--mt:#8f98a8;--ac:#4f9cff;--ok:#3ecf8e}
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 system-ui,Segoe UI,Roboto,sans-serif}
-body{height:100vh;height:100dvh;min-width:320px;display:flex;flex-direction:column;overflow:hidden}
-header{display:flex;gap:8px;align-items:center;padding:8px 14px;background:var(--p);border-bottom:1px solid var(--bd);flex-wrap:wrap;flex:none;z-index:20}
-header h1{font-size:16px;margin:0 8px 0 0;white-space:nowrap}
+html,body{min-height:100%;margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 system-ui,Segoe UI,Roboto,sans-serif}
+header{display:flex;gap:10px;align-items:center;padding:8px 14px;background:var(--p);border-bottom:1px solid var(--bd)}
+header h1{font-size:16px;margin:0 8px 0 0}
 .sp{flex:1}
-button,input,select{font:inherit;color:var(--tx);background:var(--p2);border:1px solid var(--bd);border-radius:6px;padding:6px 9px;max-width:100%;min-height:34px}
+button,input,select{font:inherit;color:var(--tx);background:var(--p2);border:1px solid var(--bd);border-radius:6px;padding:5px 9px}
 button{cursor:pointer}button:hover{border-color:var(--ac)}
 button.primary{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
 button:disabled{opacity:.5;cursor:wait}
 input[type=checkbox]{padding:0;width:16px;height:16px;accent-color:var(--ac)}
-header .navlink{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid var(--bd);border-radius:6px;color:var(--tx);text-decoration:none;background:var(--p2);white-space:nowrap}
-header .navlink:hover{border-color:var(--ac);color:#fff}
-header .navlink svg{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-#primaryTabs{display:flex;gap:4px;align-items:center;padding:3px;border:1px solid var(--bd);border-radius:8px;background:var(--bg)}
-#primaryTabs button{min-height:32px;border-color:transparent;background:transparent}
-#primaryTabs button[aria-selected="true"]{background:var(--ac);border-color:var(--ac);color:#fff}
-body:not(.tab-model) .model-only{display:none!important}
-main{display:flex;flex:1;min-height:0;min-width:0}
-aside{width:440px;min-width:320px;flex:0 0 440px;min-height:0;display:flex;flex-direction:column;border-right:1px solid var(--bd);background:var(--p)}
-.drawer-head{display:none}
+main{display:flex;min-height:calc(100vh - 58px);height:calc(100vh - 58px);min-width:0}
+aside{width:440px;min-width:320px;display:flex;flex-direction:column;border-right:1px solid var(--bd);background:var(--p)}
 .tools{padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-bottom:1px solid var(--bd)}
 .tools #q{flex:1 1 100%}
 .tools label{color:var(--mt);font-size:12px;display:flex;align-items:center;gap:4px}
 .tools input[type=number]{width:52px}
 #count{padding:6px 10px;color:var(--mt);font-size:12px;border-bottom:1px solid var(--bd)}
 #list{flex:1;overflow:auto}
-.fam{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--p2);border-bottom:1px solid var(--bd);cursor:pointer}
+.fam{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--p2);border-bottom:1px solid var(--bd);cursor:pointer;position:sticky;top:0;z-index:1}
 .fam small{color:var(--mt)}.arr{width:12px;color:var(--mt)}
 .row{display:grid;grid-template-columns:20px 1fr;gap:2px 8px;padding:5px 10px 5px 26px;border-bottom:1px solid #20242c;cursor:pointer}
 .row:hover{background:#222733}.row.cur{background:#1f3556}
 .row .nm{width:100%;padding:3px 7px;background:#171a20}
 .row small{grid-column:2;color:var(--mt);font-size:11px}
-section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
+section{flex:1;display:flex;flex-direction:column;min-width:0}
 .vtools{display:flex;gap:14px;align-items:center;padding:7px 12px;border-bottom:1px solid var(--bd);background:var(--p);flex-wrap:wrap}
 .vtools label{display:flex;align-items:center;gap:5px;color:var(--mt)}
-#stage{flex:1;position:relative;min-width:0;min-height:200px;overflow:hidden}
+#stage{flex:1;position:relative;min-height:240px;overflow:hidden}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
 #hud{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 #hud span{position:absolute;transform:translate(-50%,-50%);font-size:11px;background:#000a;padding:1px 5px;border-radius:4px;white-space:nowrap}
@@ -50,7 +40,7 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
 #info{padding:7px 12px;color:var(--mt);font-size:12px;border-top:1px solid var(--bd);background:var(--p)}
 #gallery{position:absolute;inset:0;z-index:3;display:none;flex-direction:column;background:transparent}
 #gbar{display:flex;gap:8px;align-items:center;padding:6px 12px;background:var(--p);border-bottom:1px solid var(--bd);flex-wrap:wrap}
-#gwrap{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr));gap:10px;padding:10px;align-content:start;grid-auto-rows:231px}
+#gwrap{flex:1;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;padding:10px;align-content:start;grid-auto-rows:231px}
 .tile{height:231px;border:1px solid var(--bd);border-radius:8px;overflow:hidden;background:transparent;cursor:pointer}
 .tile:hover{border-color:var(--ac)}
 .tbar{display:flex;align-items:center;gap:6px;padding:4px 8px;background:var(--p2)}
@@ -58,108 +48,47 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
 .tbody{height:180px;background:transparent}
 .tfoot{padding:3px 8px;background:var(--p2);font-size:11px;color:var(--mt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vtools select{padding:3px 6px}
-#loader{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));overflow:auto}
+#editor{display:none;gap:8px;flex-wrap:wrap;align-items:center;padding:6px 12px;border-top:1px solid var(--bd);background:var(--p)}
+#editor input[type=number]{width:64px;padding:3px 5px}
+#editor label{color:var(--mt);font-size:12px;display:flex;align-items:center;gap:3px}
+#parts button.sel{border-color:#ffd43b;color:#ffd43b}
+#loader{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px}
 .lcard{width:min(640px,100%);background:var(--p);border:1px solid var(--bd);border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:14px}
 .lcard h2{margin:0;font-size:20px}.lcard p{margin:0;color:var(--mt)}
 #drop{border:2px dashed var(--bd);border-radius:10px;padding:22px;text-align:center;color:var(--mt)}
 #drop.on{border-color:var(--ac);background:#1c2a40}
 #lbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 #prog{display:none;height:10px;background:var(--p2);border-radius:6px;overflow:hidden}#bar{height:100%;width:0;background:var(--ac);transition:width .15s}
-#prog.waiting #bar{width:38%;animation:load-sweep 1.1s ease-in-out infinite alternate}
-@keyframes load-sweep{from{transform:translateX(-25%)}to{transform:translateX(175%)}}
 #pst{color:var(--mt);font-size:13px;min-height:18px}
 .lcard small{color:var(--mt)}
-#toast{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));max-width:min(420px,calc(100vw - 32px));background:#0d2a1d;border:1px solid var(--ok);color:#c9f7e0;padding:10px 14px;border-radius:8px;display:none;white-space:pre-line;z-index:60}
+#toast{position:fixed;right:16px;bottom:16px;max-width:420px;background:#0d2a1d;border:1px solid var(--ok);color:#c9f7e0;padding:10px 14px;border-radius:8px;display:none;white-space:pre-line}
 #toast.err{background:#33191b;border-color:#e5484d;color:#ffd5d6}
-#itemView,#soundView{display:none;flex:1;min-width:0;min-height:0;overflow:auto;padding:14px max(14px,env(safe-area-inset-left)) max(20px,env(safe-area-inset-bottom))}
-.data-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 0;background:var(--bg);border-bottom:1px solid var(--bd)}
-.data-toolbar input[type=search]{flex:1 1 240px;min-width:0}
-.data-toolbar progress{width:100%;height:8px;accent-color:var(--ac)}
-.data-status{padding:12px 2px;color:var(--mt);min-height:42px}
-.data-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:8px;align-content:start}
-.data-row{min-width:0;padding:10px 12px;border:1px solid var(--bd);border-radius:6px;background:var(--p);}
-.data-row summary{cursor:pointer;font-weight:600;overflow-wrap:anywhere}
-.data-row small{color:var(--mt)}
-.data-detail{display:grid;gap:6px;margin-top:9px;padding-top:8px;border-top:1px solid var(--bd)}
-.data-part{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:5px 0;border-bottom:1px solid #292e37}
-.data-part code{overflow-wrap:anywhere;min-width:0}
-.data-pagination{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px}
-.sound-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px}
-.sound-path{overflow-wrap:anywhere;min-width:0}
-#soundList .navlink{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:6px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--p2);color:var(--tx);text-decoration:none}
-#soundList .navlink:hover{border-color:var(--ac)}
-@media(max-width:760px){
-  body{height:auto;min-height:100vh;min-height:100dvh;overflow-x:hidden;overflow-y:auto}
-  header{padding:calc(7px + env(safe-area-inset-top)) 10px 7px;gap:6px}
-  header h1{width:100%;font-size:16px}
-  #primaryTabs{flex:1 1 100%;}
-  #primaryTabs button{flex:1}
-  header .sp{display:none}
-  header #outname-label{flex:1 1 100%}
-  header #outname{width:min(100%,230px)}
-  main{flex:none;min-height:calc(100vh - 90px);min-height:calc(100dvh - 90px);height:auto}
-  aside{display:none;position:fixed;inset:0 max(12px,env(safe-area-inset-right)) 0 0;width:min(380px,calc(100vw - 36px));min-width:0;max-width:100%;height:100vh;height:100dvh;z-index:31;border-right:1px solid var(--bd);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);box-shadow:16px 0 40px #0008}
-  .drawer-open aside{display:flex}
-  .drawer-head{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--bd);font-weight:600}
-  #drawerShade{display:none;position:fixed;inset:0;z-index:30;background:#0009}
-  .drawer-open #drawerShade{display:block}
-  section{width:100%;min-height:calc(100dvh - 90px)}
-  .vtools{gap:8px;padding:8px;align-items:flex-start}
-  .vtools label{min-height:34px}
-  .vtools>span[style*="--bd"]{display:none}
-  .vtools select{min-height:34px}
-  #stage{min-height:48dvh;flex:1 0 48dvh}
-  #parts{max-height:none;overflow:visible;padding-bottom:max(8px,env(safe-area-inset-bottom))}
-  #info{padding:8px 10px}
-  #gbar{gap:5px;padding:7px;}
-  #gwrap{grid-template-columns:repeat(auto-fill,minmax(min(155px,100%),1fr));grid-auto-rows:218px;padding:7px;gap:7px}
-  .gallery-view #stage{flex:0 0 auto;height:auto;min-height:0;overflow:visible}
-  .gallery-view #gallery{position:relative;inset:auto;display:flex;min-height:0;overflow:visible}
-  .gallery-view #gwrap{flex:0 0 auto;overflow:visible}
-  .tile{height:218px}
-  .tbody{height:167px}
-  .lcard{padding:18px 16px;max-height:100%;overflow:auto}
-  #drop{padding:16px 10px}
-  #lbtns button{flex:1 1 auto}
-  #itemView,#soundView{flex:0 0 auto;min-height:auto;overflow:visible;padding:8px 10px max(20px,env(safe-area-inset-bottom))}
-  .data-list{grid-template-columns:minmax(0,1fr)}
-  .sound-row{grid-template-columns:minmax(0,1fr) auto}
-  .sound-row .sound-meta{grid-column:1/-1}
-}
-@media(max-width:390px){
-  header{gap:5px}
-  header button,header .navlink{padding:6px 7px;font-size:12px}
-  header label{font-size:12px}
-  .vtools{gap:5px}
-  .vtools label{font-size:12px}
-  #gwrap{grid-template-columns:repeat(auto-fill,minmax(min(136px,100%),1fr))}
-}
+button:focus-visible,input:focus-visible,select:focus-visible,.row:focus-visible,a:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#mainTabs{display:flex;gap:4px;align-items:center}
+button.tab{padding:6px 14px;background:transparent;border-color:transparent;color:var(--mt);font-weight:600}
+button.tab.active{background:#233b5b;color:#fff;border-color:#365b87}
+a.toplink{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--tx);background:var(--p2);border:1px solid var(--bd);border-radius:6px;padding:6px 10px;white-space:nowrap}
+a.toplink:hover{border-color:var(--ac);color:#fff}
+.row .item-label{min-width:0;overflow-wrap:anywhere;background:transparent;padding:3px 0}
+#itemLoadStatus{padding:12px;color:var(--mt)}
+@media(max-width:900px){header{flex-wrap:wrap;padding:8px;gap:6px}header h1{flex:1 1 100%;order:0}#btnSide{order:1}#mainTabs{order:2}a.toplink{order:3}header label,#btnBuild{order:4}.sp{display:none}main{height:auto;min-height:calc(100vh - 100px);flex-direction:column}aside{width:100%;min-width:0;max-height:45vh;border-right:0;border-bottom:1px solid var(--bd)}#list{min-height:120px}section{min-height:55vh}.vtools{gap:8px;padding:7px;position:static}#gwrap{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));grid-auto-rows:220px;padding:6px;gap:6px}.tile{height:220px}}
+@media(max-width:520px){header label{flex:1 1 100%}header label input{width:100%;min-width:0}#btnBuild{flex:0 0 auto}#mainTabs{flex:1 1 100%;order:2}#mainTabs button{flex:1}a.toplink{flex:1;order:3}.tools{gap:5px}.tools button{flex:1 1 auto}.vtools label{font-size:12px}.fam{position:static}.row{padding-left:12px}#parts{max-height:110px}#gbar{gap:4px;padding:5px;position:static}#gbar label{font-size:11px}#gbar button{padding:4px 6px}#stage{min-height:280px}}
 </style></head><body>
 <header>
   <h1>VanGioi Mob Studio</h1>
-  <nav id="primaryTabs" role="tablist" aria-label="Khu vực dữ liệu">
-    <button id="tabItems" type="button" role="tab" aria-selected="false" aria-controls="itemView" data-tab="items">Item</button>
-    <button id="tabModels" type="button" role="tab" aria-selected="true" aria-controls="modelView" data-tab="model">Model</button>
-    <button id="tabSounds" type="button" role="tab" aria-selected="false" aria-controls="soundView" data-tab="sounds">Âm thanh</button>
+  <button id="btnSide" title="Ẩn / hiện bảng danh sách bên trái">◀ Ẩn danh sách</button>
+  <nav id="mainTabs" aria-label="Chọn loại dữ liệu">
+    <button type="button" id="tabModels" class="tab active" aria-pressed="true">Model</button>
+    <button type="button" id="tabItems" class="tab" aria-pressed="false">Item</button>
   </nav>
-  <button id="btnSide" class="model-only" title="Ẩn / hiện bảng danh sách bên trái" aria-controls="modelPanel" aria-expanded="true">◀ Ẩn danh sách</button>
-  <button id="btnChange" class="model-only" title="Dùng file pack của riêng bạn thay cho pack có sẵn trên trang">Dùng pack khác…</button>
-  <button id="btnImport" class="model-only" title="Đọc tên từ file .yml MythicMobs / names.txt / .json">Nhập tên…</button>
-  <input type="file" id="file" multiple hidden accept=".yml,.yaml,.txt,.json">
-  <button id="btnExpN" class="model-only" title="Tải names.json (tên bạn đã đặt) để sao lưu / chia sẻ">Xuất tên</button>
-  <a class="navlink" href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="Thanks, mở GitHub ở tab mới" title="Thanks">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10m0 0 4-4m-4 4-4-4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg><span>Thanks</span>
-  </a>
-  <a class="navlink" href="https://vangioiwiki.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Wiki Server, mở trang wiki ở tab mới" title="Wiki Server">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21zM4 5.5v13A2.5 2.5 0 0 1 6.5 16H20M8 7h8M8 10h8"/></svg><span>Wiki Server</span>
-  </a>
+  <a class="toplink" href="https://github.com/obotkkkk" target="_blank" rel="noopener noreferrer" title="Thank · mở GitHub của obotkkkk">Thank ↗</a>
+  <a class="toplink" href="https://vangioiwiki.netlify.app/" target="_blank" rel="noopener noreferrer" title="Mở VanGioi Wiki">Wiki ↗</a>
   <div class="sp"></div>
-  <label id="outname-label" class="model-only" style="color:var(--mt)">Tên file&nbsp;<input id="outname" size="26"></label>
-  <button id="btnBuild" class="primary model-only">Tạo ZIP</button>
+  <label style="color:var(--mt)">Tên file&nbsp;<input id="outname" size="26"></label>
+  <button id="btnBuild" class="primary">Tạo ZIP</button>
 </header>
-<main id="modelView" role="tabpanel" aria-labelledby="tabModels">
-<aside id="modelPanel" aria-label="Danh sách model">
-  <div class="drawer-head"><span>Danh sách model</span><button id="drawerClose" aria-label="Đóng danh sách model" title="Đóng danh sách">Đóng</button></div>
+<main>
+<aside>
   <div class="tools">
     <input id="q" placeholder="Tìm theo tên hoặc id (gõ không dấu cũng được)…">
     <label><input type="checkbox" id="hidefx"> Ẩn hiệu ứng (vfx/fx)</label>
@@ -172,13 +101,13 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
 </aside>
 <section>
   <div class="vtools">
-    <button id="modelRetry" class="model-only" type="button" hidden>Thử lại dữ liệu Model</button>
     <label><input type="radio" name="view" value="single" checked> Xem 1 model</label>
-    <label><input type="radio" name="view" value="gallery"> Thư viện (render nhiều model)</label>
+    <label><input type="radio" name="view" value="gallery"> Thư viện (render nhiều model/item)</label>
     <span style="color:var(--bd)">|</span>
     <label><input type="radio" name="mode" value="grid" checked> Tách từng mảnh</label>
     <label><input type="radio" name="mode" value="overlay"> Ghép chồng</label>
     <label><input type="radio" name="mode" value="assembled"> Lắp ráp theo blueprint</label>
+    <label><input type="radio" name="mode" value="manual"> Tự xếp (chỉnh tay)</label>
     <button id="btnBp" title="Nạp file .bbmodel hoặc .zip chứa nhiều .bbmodel (thư mục plugins/ModelEngine/blueprints của server)">Nạp blueprint…</button>
     <input type="file" id="bpfile" multiple hidden accept=".bbmodel,.json,.zip">
     <label><input type="checkbox" id="bprot" checked> xoay bone</label>
@@ -195,47 +124,52 @@ section{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0}
       <span style="color:var(--mt);font-size:12px">Rê chuột vào ô để xoay · bấm vào hình để xem chi tiết</span></div>
       <div id="gwrap"></div></div></div>
   <div id="parts"></div>
+  <div id="editor">
+    <b id="edname" style="min-width:170px">Chọn một mảnh (bấm vào hình hoặc tên mảnh)</b>
+    <label>X<input type="number" id="ex" step="0.5"></label><label>Y<input type="number" id="ey" step="0.5"></label><label>Z<input type="number" id="ez" step="0.5"></label>
+    <label>Xoay X<input type="number" id="erx" step="5"></label><label>Y<input type="number" id="ery" step="5"></label><label>Z<input type="number" id="erz" step="5"></label>
+    <button id="edpreset" title="Đặt các mảnh theo bộ xương người chuẩn (đoán theo tên mảnh) rồi chỉnh tiếp">Đoán theo bộ xương người</button>
+    <button id="edbp" title="Lấy vị trí từ blueprint đã nạp để chỉnh tiếp">Lấy từ blueprint</button>
+    <button id="edreset">Đặt lại</button><button id="edsave" class="primary">Lưu bố cục</button><button id="eddel">Xóa bố cục đã lưu</button>
+    <span id="edmsg" style="color:var(--mt);font-size:12px"></span>
+  </div>
   <div id="info">Bấm vào một dòng bên trái để xem model. Kéo chuột trái = xoay, chuột phải/Shift = dời, lăn chuột = zoom.</div>
 </section>
 </main>
-<div id="drawerShade" aria-hidden="true"></div>
-<section id="itemView" role="tabpanel" aria-labelledby="tabItems" tabindex="0">
-  <div class="data-toolbar"><input id="itemSearch" type="search" placeholder="Tìm vũ khí, item hoặc model…"><label><input id="itemWeaponsOnly" type="checkbox"> Chỉ vũ khí</label><button id="itemRetry" type="button" hidden>Thử lại</button><span id="itemPageSize">40 nhóm/trang</span><progress id="itemProgress" aria-label="Đang tải chỉ mục Item" hidden></progress></div>
-  <div id="itemStatus" class="data-status" role="status" aria-live="polite">Chọn tab Item để tải chỉ mục.</div>
-  <div id="itemList" class="data-list"></div>
-  <div id="itemPagination" class="data-pagination" hidden><button id="itemPrev" type="button">Trang trước</button><span id="itemPageLabel"></span><button id="itemNext" type="button">Trang sau</button></div>
-</section>
-<section id="soundView" role="tabpanel" aria-labelledby="tabSounds" tabindex="0">
-  <div class="data-toolbar"><input id="soundSearch" type="search" placeholder="Tìm file âm thanh hoặc event…"><button id="soundRetry" type="button" hidden>Thử lại</button><span id="soundPageSize">50 file/trang</span><progress id="soundProgress" aria-label="Đang tải chỉ mục âm thanh" hidden></progress></div>
-  <div id="soundStatus" class="data-status" role="status" aria-live="polite">Chọn tab Âm thanh để tải chỉ mục.</div>
-  <div id="soundList" class="data-list"></div>
-  <div id="soundPagination" class="data-pagination" hidden><button id="soundPrev" type="button">Trang trước</button><span id="soundPageLabel"></span><button id="soundNext" type="button">Trang sau</button></div>
-</section>
 <div id="loader"><div class="lcard">
   <h2>VanGioi Mob Studio</h2>
   <p id="autonote">Xem trước model quái/boss, tick con muốn lấy rồi tải resource pack về. Dữ liệu model được tải từ chính trang này.</p>
-  <div id="prog" style="display:block" role="progressbar" aria-label="Tiến trình tải pack" aria-valuemin="0" aria-valuemax="100"><div id="bar"></div></div><div id="pst" role="status" aria-live="polite">Đang chuẩn bị…</div>
+  <div id="prog" style="display:block"><div id="bar"></div></div><div id="pst">Đang chuẩn bị…</div>
   <div id="manual" style="display:none;flex-direction:column;gap:14px">
     <p>Không có sẵn dữ liệu trên trang này — hãy chọn file pack của bạn:</p>
     <div id="drop">Kéo thả <b>VanGioi_Full_Pack.zip</b> vào đây<br>hoặc <button id="pickFull">Chọn file…</button><div id="fullname" style="margin-top:8px;color:var(--tx)"></div></div>
     <div>Item pack (tuỳ chọn — để bỏ texture đã có sẵn): <button id="pickItem">Chọn…</button> <span id="itemname"></span></div>
     <input type="file" id="inFull" accept=".zip" hidden><input type="file" id="inItem" accept=".zip" hidden>
     <label style="display:flex;gap:8px;align-items:center;color:var(--mt)"><input type="checkbox" id="remember" checked> Nhớ pack trong trình duyệt này (mở nhanh lần sau; không gửi đi đâu)</label>
-    <div id="lbtns"><button id="goLoad" class="primary" disabled>Bắt đầu</button><button id="retryHost" style="display:none">Thử tải lại từ host</button><button id="useSaved" style="display:none"></button><button id="forget" style="display:none">Xóa dữ liệu đã lưu</button></div>
+    <div id="lbtns"><button id="goLoad" class="primary" disabled>Bắt đầu</button><button id="useSaved" style="display:none"></button><button id="forget" style="display:none">Xóa dữ liệu đã lưu</button></div>
   </div>
 </div></div>
 <div id="toast"></div>
 <script src="lib/three.min.js"></script>
 <script src="lib/fflate.min.js"></script>
+<script id="vg-web-guard">
+(()=>{
+  const editable=e=>e.target instanceof Element&&!!e.target.closest('input,textarea,select,[contenteditable="true"]');
+  document.addEventListener('contextmenu',e=>{if(!editable(e))e.preventDefault();},true);
+  document.addEventListener('keydown',e=>{
+    if(editable(e)||e.isComposing)return;
+    const k=String(e.key||'').toLowerCase();
+    const blocked=k==='f12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(k))||(e.ctrlKey&&!e.shiftKey&&k==='u');
+    if(blocked){e.preventDefault();e.stopImmediatePropagation();}
+  },true);
+})();
+</script>
 <script>
 /* ===== Xử lý hoàn toàn trong trình duyệt: không có máy chủ, không tải gì lên ===== */
 const LOCAL=(()=>{
 const TD=new TextDecoder(),TE=new TextEncoder();
 const ATLAS=['ia_overlay_legacy_atlas/assets/minecraft/atlases/blocks.json','ia_overlay_modern_atlas/assets/minecraft/atlases/blocks.json','ia_overlay_modern_atlas/assets/minecraft/atlases/items.json'];
-const S={pk:null,it:null,ids:new Map(),amap:{},tsize:{},intem:new Set(),missing:new Set(),names:{},bps:new Map(),last:null};
-const DATA_ROOT='pack/data/',BLUEPRINT_URL='pack/blueprint.json';
-const jsonCache=new Map(),byteCache=new Map(),pinnedJson=new Set(['version.json','models/index.json','items/index.json','sounds/index.json','names.json']);
-let modelIndexPromise=null,itemIndexPromise=null,soundIndexPromise=null,blueprintPromise=null,staticVersion=null,packNamesPromise=null,packNames={};
+const S={pk:null,it:null,ids:new Map(),amap:{},tsize:{},intem:new Set(),missing:new Set(),names:{},bps:new Map(),lays:new Map(),last:null};
 
 /* ---------- IndexedDB (lưu tạm trên máy người dùng) ---------- */
 let dbp=null;
@@ -245,129 +179,6 @@ const kvGet=k=>kv('readonly',s=>s.get(k)).catch(()=>undefined);
 const kvSet=(k,v)=>kv('readwrite',s=>s.put(v,k)).catch(()=>{});
 const kvDel=k=>kv('readwrite',s=>s.delete(k)).catch(()=>{});
 const kvKeys=p=>kv('readonly',s=>s.getAllKeys()).then(a=>(a||[]).filter(k=>String(k).startsWith(p))).catch(()=>[]);
-
-function safeDataPath(path){
-  if(typeof path!=='string'||!path||path.startsWith('/')||path.split('/').some(p=>!p||p==='.'||p==='..')||path.includes('\\'))throw new Error('Đường dẫn dữ liệu không hợp lệ');
-  return DATA_ROOT+path;
-}
-function trimCache(cache,max,pinned){
-  while(cache.size>max){const key=[...cache.keys()].find(x=>!pinned.has(x));if(key===undefined)break;cache.delete(key);}
-}
-async function dataResponse(path){
-  const version=path==='version.json'?null:await ensureVersion();
-  const url=safeDataPath(path)+(version?'?v='+encodeURIComponent(version.buildId):'');
-  const response=await fetch(url,{cache:path==='version.json'?'no-cache':'force-cache'});
-  if(!response.ok)throw new Error(`${path}: HTTP ${response.status}`);
-  const type=(response.headers.get('content-type')||'').toLowerCase();
-  if(type.includes('text/html'))throw new Error(`${path}: host trả về HTML thay vì dữ liệu`);
-  return response;
-}
-function dataJson(path){
-  if(jsonCache.has(path)){const cached=jsonCache.get(path);jsonCache.delete(path);jsonCache.set(path,cached);return cached;}
-  jsonCache.set(path,(async()=>{
-    const response=await dataResponse(path),data=await response.json();
-    if(!data||typeof data!=='object')throw new Error(`${path}: JSON không hợp lệ`);
-    return data;
-  })().catch(e=>{jsonCache.delete(path);throw e;}));
-  trimCache(jsonCache,80,pinnedJson);
-  return jsonCache.get(path);
-}
-function dataBlob(path){
-  if(byteCache.has(path)){const cached=byteCache.get(path);byteCache.delete(path);byteCache.set(path,cached);return cached;}
-  byteCache.set(path,dataResponse(path).then(r=>r.arrayBuffer()).catch(e=>{byteCache.delete(path);throw e;}));
-  trimCache(byteCache,32,new Set());
-  return byteCache.get(path);
-}
-async function ensureVersion(){
-  if(staticVersion)return staticVersion;
-  const response=await fetch(safeDataPath('version.json'),{cache:'no-cache'});
-  if(!response.ok||(response.headers.get('content-type')||'').includes('text/html'))throw new Error('Không tải được version.json');
-  const data=await response.json();
-  if(data.schemaVersion!==1||typeof data.buildId!=='string'||!data.buildId)throw new Error('version.json sai schema');
-  const previous=await kvGet('static-build');
-  if(previous&&previous!==data.buildId){jsonCache.clear();byteCache.clear();modelIndexPromise=itemIndexPromise=soundIndexPromise=blueprintPromise=null;}
-  await kvSet('static-build',data.buildId);
-  staticVersion=data;return data;
-}
-async function getModelIndex(){
-  if(modelIndexPromise)return modelIndexPromise;
-  modelIndexPromise=(async()=>{
-    await ensureVersion();
-    const data=await dataJson('models/index.json');
-    if(data.version!==1||!Array.isArray(data.ids)||!Array.isArray(data.res))throw new Error('models/index.json sai schema');
-    S.amap=data.amap&&typeof data.amap==='object'?data.amap:{};
-    S.tsize={};data.res.forEach(x=>{if(x&&typeof x.r==='string')S.tsize[x.r]=Number(x.b)||0;});
-    S.ids=new Map(data.ids.filter(x=>x&&typeof x.id==='string').map(x=>[x.id,{...x,models:[],items:[],res:new Set(x.res||[])}]));
-    await loadUserData();
-    await getPackNames();
-    return data;
-  })().catch(e=>{modelIndexPromise=null;throw e;});
-  return modelIndexPromise;
-}
-function getItemIndex(){
-  if(!itemIndexPromise)itemIndexPromise=(async()=>{
-    await ensureVersion();const [data]=await Promise.all([dataJson('items/index.json'),getPackNames()]);
-    if(data.version!==1||!Array.isArray(data.items))throw new Error('items/index.json sai schema');return data;
-  })().catch(e=>{itemIndexPromise=null;throw e;});
-  return itemIndexPromise;
-}
-function getSoundIndex(){
-  if(!soundIndexPromise)soundIndexPromise=(async()=>{
-    await ensureVersion();const [data]=await Promise.all([dataJson('sounds/index.json'),getPackNames()]);
-    if(data.version!==1||!Array.isArray(data.files))throw new Error('sounds/index.json sai schema');return data;
-  })().catch(e=>{soundIndexPromise=null;throw e;});
-  return soundIndexPromise;
-}
-async function getPackNames(){
-  if(packNamesPromise)return packNamesPromise;
-  packNamesPromise=(async()=>{
-    await ensureVersion();const key='pack-names:'+staticVersion.buildId;
-    try{
-      const data=await dataJson('names.json');
-      if(data.schemaVersion!==1||!['models','items','sounds','soundEvents'].every(k=>data[k]&&typeof data[k]==='object'))throw new Error('names.json sai schema');
-      packNames=data;await kvSet(key,data);return data;
-    }catch(e){
-      const cached=await kvGet(key);
-      packNames=cached&&cached.schemaVersion===1?cached:{models:{},items:{},sounds:{},soundEvents:{}};
-      return packNames;
-    }
-  })().catch(()=>{packNames={models:{},items:{},sounds:{},soundEvents:{}};return packNames;});
-  return packNamesPromise;
-}
-function displayName(category,id){
-  const local=S.names&&S.names[id];return local||packNames[category]?.[id]||id;
-}
-async function getHostedBlueprint(){
-  if(blueprintPromise)return blueprintPromise;
-  blueprintPromise=(async()=>{
-    const index=await getModelIndex(),ids=new Set(index.ids.map(x=>x.id)),cached=await kvGet('host-blueprint');
-    const validate=data=>{
-      if(!data||data.version!==1||!Array.isArray(data.models))return null;
-      const rows=[];
-      for(const row of data.models){
-        if(!row||typeof row.id!=='string'||!ids.has(row.id)||!Number.isFinite(Number(row.order)))continue;
-        rows.push({id:row.id,order:Number(row.order),group:typeof row.group==='string'&&row.group.trim()?row.group.trim():null});
-      }
-      return rows.length?rows:null;
-    };
-    try{
-      const response=await fetch(BLUEPRINT_URL,{cache:'no-cache'});
-      if(response.ok){
-        if((response.headers.get('content-type')||'').includes('text/html'))throw new Error('Blueprint trả về HTML');
-        const data=await response.json(),rows=validate(data);
-        if(!rows)throw new Error('Blueprint rỗng hoặc sai schema');
-        await kvSet('host-blueprint',{data,etag:response.headers.get('etag')||'',savedAt:Date.now()});
-        S.hostBlueprint=rows;return rows;
-      }
-      if(response.status!==404&&response.status!==410)throw new Error(`HTTP ${response.status}`);
-    }catch(e){console.warn('Không tải được blueprint host:',e.message);}
-    const rows=cached&&validate(cached.data);S.hostBlueprint=rows||null;return rows||null;
-  })().catch(e=>{blueprintPromise=null;console.warn('Bỏ qua blueprint host:',e.message);return null;});
-  return blueprintPromise;
-}
-function invalidateStaticCache(){
-  jsonCache.clear();byteCache.clear();modelIndexPromise=itemIndexPromise=soundIndexPromise=blueprintPromise=packNamesPromise=null;staticVersion=null;packNames={};
-}
 
 /* ---------- đọc zip "khoan dung" (pack của server cố ý làm hỏng header/CRC) ---------- */
 function openZip(buf){
@@ -383,16 +194,6 @@ function openZip(buf){
     if(!name.endsWith('/'))ent.set(name,{lho,cs,method});
   }
   return{buf,dv,ent,has:n=>ent.has(n)};
-}
-function validatePack(z){
-  const modelFiles=[...z.ent.keys()].filter(n=>/^assets\/modelengine\/models\/[^/]+\/.+\.json$/i.test(n));
-  if(!modelFiles.length)throw new Error('ZIP không có dữ liệu assets/modelengine/models/');
-  return z;
-}
-const hostedZipCache=new WeakMap();
-async function readPackFile(file){
-  try{return validatePack(hostedZipCache.get(file)||openZip(new Uint8Array(await file.arrayBuffer())));}
-  catch(e){throw new Error(`ZIP không hợp lệ hoặc thiếu dữ liệu model: ${e.message||e}`);}
 }
 function zread(z,n){
   const e=z.ent.get(n);if(!e)throw new Error('thiếu '+n);
@@ -439,14 +240,13 @@ async function scan(onp){
   for(const ap of ATLAS)if(pk.has(ap)){try{for(const s of zjson(pk,ap).sources)if(s.sprite&&!(s.sprite in S.amap))S.amap[s.sprite]=s.resource;}catch(e){}}
   const ids=new Map(),re=/^assets\/modelengine\/(models|items)\/([^/]+)\/(.+)\.json$/;
   for(const n of[...pk.ent.keys()].sort()){const m=re.exec(n);if(!m)continue;
-    if(!ids.has(m[2]))ids.set(m[2],{models:[],items:[],res:new Set(),mbytes:0,unres:0,validModels:0});
+    if(!ids.has(m[2]))ids.set(m[2],{models:[],items:[],res:new Set(),mbytes:0,unres:0});
     ids.get(m[2])[m[1]==='models'?'models':'items'].push(n);}
   let k=0;const total=ids.size;
   for(const[id,e]of ids){
     for(const n of e.models){
       const raw=zread(pk,n);e.mbytes+=raw.length;
       let d;try{d=JSON.parse(TD.decode(raw).replace(/^\uFEFF/,''));}catch(x){continue;}
-      if(!d||typeof d!=='object')continue;e.validModels++;
       for(const v of Object.values(d.textures||{})){
         if(typeof v!=='string'||v[0]==='#')continue;
         if(v.startsWith('ia:')){const r=S.amap[v];r?e.res.add(r):e.unres++;}else e.res.add(v);
@@ -466,48 +266,36 @@ async function scan(onp){
 const scanKey=(f,i)=>`${f.name}|${f.size}|${f.lastModified}|${i?i.name+'|'+i.size+'|'+i.lastModified:'-'}`;
 async function loadFiles(full,item,remember,onp){
   onp(0.02,'Đang đọc file…');
-  S.pk=await readPackFile(full);
+  S.pk=openZip(new Uint8Array(await full.arrayBuffer()));
   S.it=item?openZip(new Uint8Array(await item.arrayBuffer())):null;
-  const key='v2|'+scanKey(full,item),c=await kvGet('scan');
+  if(!S.pk.ent.size)throw new Error('File zip trống hoặc không đọc được');
+  const key=scanKey(full,item),c=await kvGet('scan');
   if(c&&c.key===key){
     S.amap=c.amap;S.ids=new Map(c.ids.map(([id,e])=>[id,{...e,res:new Set(e.res)}]));S.tsize=c.tsize;S.intem=new Set(c.intem);S.missing=new Set(c.missing);
     onp(0.95,'Dùng kết quả quét đã lưu');
   }else{
     await scan(onp);
+    await kvSet('scan',{key,amap:S.amap,ids:[...S.ids].map(([id,e])=>[id,{...e,res:[...e.res]}]),tsize:S.tsize,intem:[...S.intem],missing:[...S.missing]});
   }
-  if(![...S.ids.values()].some(e=>e.validModels>0))throw new Error('Không đọc được model JSON hợp lệ trong assets/modelengine/models/');
-  if(!c||c.key!==key)await kvSet('scan',{key,amap:S.amap,ids:[...S.ids].map(([id,e])=>[id,{...e,res:[...e.res]}]),tsize:S.tsize,intem:[...S.intem],missing:[...S.missing]});
+  if(!S.ids.size)throw new Error('Không thấy assets/modelengine/models trong pack này — có đúng là VanGioi_Full_Pack không?');
   if(remember){onp(0.97,'Đang lưu pack vào trình duyệt này…');await kvSet('pack',{blob:full,name:full.name});if(item)await kvSet('item',{blob:item,name:item.name});else await kvDel('item');}
   await loadUserData();
   onp(1,'Xong');
 }
 async function loadUserData(){
-  S.names={};S.bps=new Map();
+  S.names={};S.bps=new Map();S.lays=new Map();
   const low=o=>Object.fromEntries(Object.entries(o||{}).map(([k,v])=>[k.toLowerCase(),String(v)]));
   try{const r=await fetch('names.json');if(r.ok)Object.assign(S.names,low(await r.json()));}catch(e){}
+  try{const r=await fetch('layouts.json');if(r.ok){const d=await r.json();for(const k in d)S.lays.set(k.toLowerCase(),d[k]);}}catch(e){}
   Object.assign(S.names,low(await kvGet('names')));
   for(const k of await kvKeys('bp:'))S.bps.set(k.slice(3),await kvGet(k));
+  for(const k of await kvKeys('lay:'))S.lays.set(k.slice(4),await kvGet(k));
+  // Blueprint thư mục host là tuỳ chọn; không có folder/file thì tiếp tục như bình thường.
+  await loadHostedBlueprints();
 }
 
-/* ---------- tên hiển thị: .yml MythicMobs / .txt / .json ---------- */
+/* ---------- tên hiển thị: giữ khả năng sửa tên trực tiếp trong danh sách ---------- */
 const cleanName=t=>String(t).trim().replace(/^['"]+|['"]+$/g,'').replace(/[&\u00a7]#[0-9a-fA-F]{6}/g,'').replace(/[&\u00a7][0-9a-fk-orA-FK-OR]/g,'').replace(/<[^>]*>/g,'').replace(/\s+/g,' ').trim();
-function parseMythic(text){
-  const out=new Map();let key=null,disp=null,model=null;
-  const flush=()=>{if(key&&model){const nm=disp?cleanName(disp):key,l=out.get(model.toLowerCase())||[];if(nm&&!l.includes(nm))l.push(nm);out.set(model.toLowerCase(),l);}};
-  for(const ln of text.split(/\r?\n/)){
-    let m=/^([^\s#:][^:]*):\s*(#.*)?$/.exec(ln);
-    if(m){flush();key=m[1].trim();disp=null;model=null;continue;}
-    m=/^\s+Display:\s*(.+?)\s*$/.exec(ln);if(m&&disp===null)disp=m[1];
-    m=/^\s+(?:Model|ModelId|Id):\s*['"]?([\w-]+)/.exec(ln);if(m&&model===null&&/model/i.test(ln))model=m[1];
-  }
-  flush();const o={};out.forEach((v,k)=>o[k]=v.join(' / '));return o;
-}
-function parseNames(name,text){
-  const low=name.toLowerCase();
-  if(/\.ya?ml$/.test(low))return parseMythic(text);
-  if(low.endsWith('.json')){const d=JSON.parse(text.replace(/^\uFEFF/,'')),o={};for(const k in d)if(d[k])o[k.toLowerCase()]=cleanName(d[k]);return o;}
-  const o={};for(let ln of text.split(/\r?\n/)){ln=ln.trim();if(!ln||ln[0]==='#'||!ln.includes('='))continue;const i=ln.indexOf('='),v=ln.slice(i+1).trim();if(v)o[ln.slice(0,i).trim().toLowerCase()]=cleanName(v);}return o;
-}
 
 /* ---------- blueprint .bbmodel ---------- */
 function parseBB(text){
@@ -516,23 +304,118 @@ function parseBB(text){
   return walk(d.outliner);
 }
 const countBones=t=>t.reduce((a,n)=>a+1+countBones(n.children),0);
+const blueprintId=name=>String(name||'').replace(/^.*[\\/]/,'').replace(/\.[^.]*$/,'').toLowerCase().replace(/[^\w.\-]/g,'_');
 async function saveBP(name,text){
   const tree=parseBB(text);if(!tree.length)throw new Error(name+': không có bone (outliner) — cần file .bbmodel của Blockbench');
-  const id=name.replace(/^.*[\\/]/,'').replace(/\.[^.]*$/,'').toLowerCase().replace(/[^\w.\-]/g,'_');
+  const id=blueprintId(name);
   S.bps.set(id,tree);await kvSet('bp:'+id,tree);return{id,bones:countBones(tree),matched:S.ids.has(id)};
+}
+
+// Đọc các .bbmodel đặt cạnh website trong /blueprints/ (tuỳ chọn).
+// Ưu tiên blueprints/index.json; nếu file này thiếu hoặc không liệt kê file,
+// thử đọc danh sách thư mục khi host cho phép directory listing.
+function safeHostedBPPath(value){
+  let p=String(value||'').trim().replace(/\\/g,'/');
+  if(!p||p.startsWith('/')||/^[a-z][a-z0-9+.-]*:/i.test(p)||!/[.]bbmodel$/i.test(p))return null;
+  const seg=p.split('/');if(seg.some(s=>!s||s==='.'||s==='..'))return null;
+  return seg.join('/');
+}
+function hostedBPUrl(path){return 'blueprints/'+path.split('/').map(encodeURIComponent).join('/');}
+async function scanHostedBPDirectory(path='blueprints/',depth=0,seen=new Set(),out=[]){
+  if(depth>4||out.length>=500||seen.has(path))return out;seen.add(path);
+  try{
+    const response=await fetch(path,{cache:'no-store'});if(!response.ok)return out;
+    const html=await response.text(),doc=new DOMParser().parseFromString(html,'text/html');
+    const root=new URL('blueprints/',window.location.href),base=new URL(path,window.location.href);
+    for(const a of doc.querySelectorAll('a[href]')){
+      if(out.length>=500)break;
+      let u;try{u=new URL(a.getAttribute('href'),base);}catch(e){continue;}
+      if(u.origin!==window.location.origin||!u.pathname.startsWith(root.pathname))continue;
+      if(u.pathname===root.pathname)continue;
+      let rel;try{rel=decodeURIComponent(u.pathname.slice(root.pathname.length));}catch(e){continue;}
+      if(rel.split('/').some(s=>s==='..'))continue;
+      if(u.pathname.endsWith('/')){await scanHostedBPDirectory('blueprints/'+rel,depth+1,seen,out);continue;}
+      const clean=safeHostedBPPath(rel);if(clean)out.push(clean);
+    }
+  }catch(e){/* host không có thư mục hoặc tắt directory listing: bỏ qua */}
+  return out;
+}
+async function loadHostedBlueprints(){
+  let paths=[];
+  try{
+    const response=await fetch('blueprints/index.json',{cache:'no-store'});
+    if(response.ok){
+      const doc=await response.json();
+      const listed=Array.isArray(doc)?doc:(Array.isArray(doc.files)?doc.files:(Array.isArray(doc.blueprints)?doc.blueprints:[]));
+      paths=listed.map(safeHostedBPPath).filter(Boolean);
+    }
+  }catch(e){/* index.json là tuỳ chọn */}
+  if(!paths.length)paths=await scanHostedBPDirectory();
+  paths=[...new Set(paths)].sort();
+  if(!paths.length)return 0;
+  let loaded=0;const usedIds=new Set();
+  for(const path of paths){
+    try{
+      const response=await fetch(hostedBPUrl(path),{cache:'no-cache'});
+      if(!response.ok)continue;
+      const text=await response.text(),id=blueprintId(path.split('/').pop());
+      if(usedIds.has(id)){console.warn('[VanGioi] Bỏ qua .bbmodel trùng ID:',path,id);continue;}
+      const tree=parseBB(text);
+      if(!tree.length){console.warn('[VanGioi] Bỏ qua .bbmodel không có bone/outliner:',path);continue;}
+      usedIds.add(id);S.bps.set(id,tree);loaded++;
+      if(!S.ids.has(id))console.warn('[VanGioi] Blueprint chưa khớp ID model nào; hãy đổi tên file thành <model-id>.bbmodel:',path);
+    }catch(e){console.warn('[VanGioi] Bỏ qua blueprint lỗi:',path,e&&e.message||e);}
+  }
+  if(loaded)console.info(`[VanGioi] Đã nạp ${loaded} blueprint từ /blueprints/`);
+  return loaded;
+}
+
+/*
+ * Cố ý ghi CRC sai vào header cục bộ và central directory của ZIP vừa tạo.
+ * Dữ liệu nén vẫn giữ nguyên: một số công cụ giải nén sẽ báo Bad CRC,
+ * còn trình đọc ZIP của Java có thể đọc file mà không xác minh CRC.
+ * Đây chỉ là biện pháp cản trích xuất cơ bản, KHÔNG phải mã hóa.
+ */
+function corruptZipCrc(zipBytes){
+  const out=zipBytes.slice(),view=new DataView(out.buffer,out.byteOffset,out.byteLength);
+  const sig=(p)=>p>=0&&p+4<=out.length?view.getUint32(p,true):0;
+  // Tìm EOCD ở cuối file (bao gồm ZIP có comment).
+  let eocd=-1;const min=Math.max(0,out.length-22-65535);
+  for(let p=out.length-22;p>=min;p--){
+    if(sig(p)===0x06054b50&&p+22+view.getUint16(p+20,true)===out.length){eocd=p;break;}
+  }
+  if(eocd<0)throw new Error('Không tìm thấy ZIP End Of Central Directory.');
+  const disk=view.getUint16(eocd+4,true),cdDisk=view.getUint16(eocd+6,true);
+  const total=view.getUint16(eocd+10,true),cdSize=view.getUint32(eocd+12,true),cdOffset=view.getUint32(eocd+16,true);
+  if(disk!==0||cdDisk!==0||total===0xFFFF||cdSize===0xFFFFFFFF||cdOffset===0xFFFFFFFF)
+    throw new Error('ZIP nhiều đĩa/ZIP64 chưa được hỗ trợ cho CRC deterrent.');
+  let p=cdOffset,changed=0;
+  for(let i=0;i<total;i++){
+    if(sig(p)!==0x02014b50)throw new Error('Central directory ZIP không hợp lệ.');
+    const original=view.getUint32(p+16,true),bad=(original^0xFFFFFFFF)>>>0;
+    const nameLen=view.getUint16(p+28,true),extraLen=view.getUint16(p+30,true),commentLen=view.getUint16(p+32,true);
+    const localOffset=view.getUint32(p+42,true);
+    if(sig(localOffset)!==0x04034b50)throw new Error('Local ZIP header không hợp lệ.');
+    view.setUint32(p+16,bad,true);       // CRC trong central directory
+    view.setUint32(localOffset+14,bad,true); // CRC trong local file header
+    changed++;
+    p+=46+nameLen+extraLen+commentLen;
+  }
+  if(!changed)throw new Error('ZIP không có entry để áp dụng CRC deterrent.');
+  return out;
 }
 
 /* ---------- tạo ZIP ngay trong trình duyệt ---------- */
 function buildZip(sel){
   const J=o=>TE.encode(JSON.stringify(o)),files={},used=new Set();
-  files['pack.mcmeta']=[J({pack:{pack_format:46,supported_formats:[32,9999],description:'Van Gioi - Mob/Boss models (tu chon)'}}),{level:6}];
+  files['pack.mcmeta']=[J({pack:{pack_format:46,supported_formats:[32,9999],description:'Van Gioi - Mob/Boss models (tu chon)'}}),{level:9}];
   for(const id of sel){const e=S.ids.get(id);
     for(const n of e.models){
-      let d;try{d=JSON.parse(TD.decode(zread(S.pk,n)).replace(/^\uFEFF/,''));}catch(x){files[n]=[zread(S.pk,n),{level:6}];continue;}
+      let d;try{d=JSON.parse(TD.decode(zread(S.pk,n)).replace(/^\uFEFF/,''));}catch(x){files[n]=[zread(S.pk,n),{level:9}];continue;}
       if(d.textures&&typeof d.textures==='object')d.textures=mapTex(d.textures,S.amap);
-      files[n]=[J(d),{level:6}];
+      files[n]=[J(d),{level:9}];
     }
-    for(const n of e.items)files[n]=[zread(S.pk,n),{level:6}];
+    for(const n of e.items)files[n]=[zread(S.pk,n),{level:9}];
     e.res.forEach(r=>used.add(r));
   }
   const sources=[];
@@ -540,95 +423,52 @@ function buildZip(sel){
     if(S.missing.has(r))continue;sources.push({type:'single',resource:r});
     if(S.intem.has(r))continue;
     const p=texPath(r);files[p]=[fixPng(zread(S.pk,p)),{level:0}];
-    if(S.pk.has(p+'.mcmeta'))files[p+'.mcmeta']=[zread(S.pk,p+'.mcmeta'),{level:6}];
+    if(S.pk.has(p+'.mcmeta'))files[p+'.mcmeta']=[zread(S.pk,p+'.mcmeta'),{level:9}];
   }
   const atlas=J({sources});
-  files['assets/minecraft/atlases/blocks.json']=[atlas,{level:6}];
-  files['assets/minecraft/atlases/items.json']=[atlas,{level:6}];
-  return fflate.zipSync(files);
+  files['assets/minecraft/atlases/blocks.json']=[atlas,{level:9}];
+  files['assets/minecraft/atlases/items.json']=[atlas,{level:9}];
+  return corruptZipCrc(fflate.zipSync(files));
 }
 const safeName=n=>{n=String(n||'').replace(/^.*[\\/]/,'').replace(/[^\w.\-\u00C0-\u1EF9]/g,'_').replace(/^[._]+|[._]+$/g,'')||'VanGioi_Mobs_Pack';return/\.zip$/i.test(n)?n:n+'.zip';};
 
 /* ---------- texture cho bản xem trước ---------- */
 async function texture(r){
-  if(!S.pk){
-    const p=texPath(r);let response;
-    try{response=await dataResponse('resources/'+p);}catch(e){return null;}
-    const blob=await response.blob(),dv=new DataView(await blob.arrayBuffer()),W=dv.getUint32(16),H=dv.getUint32(20);let fw=W,fh=H;
-    try{const mc=await dataJson('resources/'+p+'.mcmeta'),an=mc.animation;
-      if(an){let a=an.width,b=an.height;if(a==null&&b==null)a=b=W;else if(a==null)a=W;else if(b==null)b=a;fw=Math.min(a,W);fh=Math.min(b,H);}}catch(e){}
-    return{blob,frame:fw+','+fh};
+  const p=texPath(r),src=S.pk&&S.pk.has(p)?S.pk:(S.it&&S.it.has(p)?S.it:null);
+  let data,meta=null;
+  if(src){
+    data=fixPng(zread(src,p));
+    if(src.has(p+'.mcmeta')){try{meta=zjson(src,p+'.mcmeta');}catch(e){}}
+  }else{
+    // Item RSP đã được build vào resources tĩnh; dùng nó khi texture không có trong Full RSP.
+    try{
+      const response=await fetch('pack/data/resources/'+p,{cache:'force-cache'});
+      if(!response.ok)return null;
+      data=fixPng(new Uint8Array(await response.arrayBuffer()));
+      try{const mr=await fetch('pack/data/resources/'+p+'.mcmeta',{cache:'force-cache'});if(mr.ok)meta=await mr.json();}catch(e){}
+    }catch(e){return null;}
   }
-  const p=texPath(r),src=S.pk.has(p)?S.pk:(S.it&&S.it.has(p)?S.it:null);if(!src)return null;
-  const data=fixPng(zread(src,p)),dv=new DataView(data.buffer,data.byteOffset,data.byteLength),W=dv.getUint32(16),H=dv.getUint32(20);
-  let fw=W,fh=H;
-  if(src.has(p+'.mcmeta')){try{const an=zjson(src,p+'.mcmeta').animation;
-    if(an){let a=an.width,b=an.height;if(a==null&&b==null)a=b=W;else if(a==null)a=W;else if(b==null)b=a;fw=Math.min(a,W);fh=Math.min(b,H);}}catch(e){}}
+  const dv=new DataView(data.buffer,data.byteOffset,data.byteLength),W=dv.getUint32(16),H=dv.getUint32(20);
+  let fw=W,fh=H;const an=meta&&meta.animation;
+  if(an){let a=an.width,b=an.height;if(a==null&&b==null)a=b=W;else if(a==null)a=W;else if(b==null)b=a;fw=Math.min(a,W);fh=Math.min(b,H);}
   return{blob:new Blob([data],{type:'image/png'}),frame:fw+','+fh};
-}
-
-async function buildStaticZip(sel){
-  const J=o=>TE.encode(JSON.stringify(o)),files={},used=new Set();
-  files['pack.mcmeta']=[J({pack:{pack_format:46,supported_formats:[32,9999],description:'Van Gioi - Mob/Boss models (tu chon)'}}),{level:6}];
-  for(const id of sel){
-    if(!/^[\w.-]+$/.test(id))throw new Error('ID model không hợp lệ');
-    const [model,item]=await Promise.all([dataJson('models/'+id+'.json'),dataJson('items/'+id+'.json').catch(()=>null)]);
-    for(const part of model.parts||[]){
-      const document=part.json||{};
-      for(const value of Object.values(document.textures||{})){
-        if(typeof value!=='string'||value[0]==='#')continue;
-        const resolved=value.startsWith('ia:')?S.amap[value]:value;if(resolved)used.add(resolved);
-      }
-      const output={...document};if(output.textures)output.textures=mapTex(output.textures,S.amap);
-      files[part.path]=[J(output),{level:6}];
-    }
-    for(const entry of item&&item.items||[])if(entry.path&&entry.data)files[entry.path]=[J(entry.data),{level:6}];
-  }
-  const sources=[];
-  for(const resource of [...used].sort()){
-    const path=texPath(resource);let bytes;
-    try{bytes=new Uint8Array(await dataBlob('resources/'+path));}catch(e){continue;}
-    sources.push({type:'single',resource});files[path]=[bytes,{level:0}];
-    try{files[path+'.mcmeta']=[new Uint8Array(await dataBlob('resources/'+path+'.mcmeta')),{level:6}];}catch(e){}
-  }
-  const atlas=J({sources});
-  files['assets/minecraft/atlases/blocks.json']=[atlas,{level:6}];
-  files['assets/minecraft/atlases/items.json']=[atlas,{level:6}];
-  return fflate.zipSync(files);
 }
 
 /* ---------- "API" cục bộ: cùng hình dạng với bản máy chủ nên giao diện giữ nguyên ---------- */
 async function route(u,o){
   const url=new URL(u,'http://x'),q=Object.fromEntries(url.searchParams),path=url.pathname,body=o&&o.body?JSON.parse(o.body):{};
   if(path==='/api/list'){
-    if(!S.pk){
-      const data=await getModelIndex(),blueprint=await getHostedBlueprint(),byId=new Map((blueprint||[]).map(x=>[x.id,x]));
-      const ids=data.ids.map(x=>({...x,fam:byId.get(x.id)?.group||x.fam||x.id.split(/[_-]/)[0]}));
-      ids.sort((a,b)=>{const ax=byId.get(a.id),bx=byId.get(b.id);if(ax&&bx)return ax.order-bx.order||a.id.localeCompare(b.id);if(ax)return-1;if(bx)return 1;return a.id.localeCompare(b.id);});
-      return{ids,res:data.res,names:S.names,outName:'VanGioi_Mobs_Pack.zip',bps:[...S.bps.keys()]};
-    }
     const res=Object.keys(S.tsize).sort(),idx=new Map(res.map((r,i)=>[r,i]));
     return{ids:[...S.ids].map(([id,e])=>({id,parts:e.models.length,mb:e.mbytes,res:[...e.res].filter(r=>idx.has(r)).map(r=>idx.get(r)).sort((a,b)=>a-b)})),
-      res:res.map(r=>({r,b:S.tsize[r]||0})),names:S.names,outName:'VanGioi_Mobs_Pack.zip',bps:[...S.bps.keys()].sort()};
+      res:res.map(r=>({r,b:S.tsize[r]||0})),names:S.names,outName:'VanGioi_Mobs_Pack.zip',bps:[...S.bps.keys()].sort(),layouts:[...S.lays.keys()].sort()};
   }
   if(path==='/api/model'){
-    if(!S.pk){
-      const id=q.id||'';if(!/^[\w.-]+$/.test(id)||!S.ids.has(id))throw new Error('không có model này');
-      const data=await dataJson('models/'+id+'.json');
-      const wanted=q.part,source=(data.parts||[]).filter(p=>!wanted||p.name===wanted);
-      if(wanted&&!source.length)throw new Error('không có part '+wanted+' trong model này');
-      return{parts:source.map(p=>{const d=p.json||{};return{name:p.name,json:{textures:mapTex(d.textures,S.amap),elements:d.elements||[],display:d.display||{}}};})};
-    }
     const e=S.ids.get(q.id);if(!e)throw new Error('không có model này');
     return{parts:e.models.map(n=>{const d=zjson(S.pk,n);return{name:n.split('/models/'+q.id+'/').pop().replace(/\.json$/,''),json:{textures:mapTex(d.textures,S.amap),elements:d.elements||[]}};})};
   }
   if(path==='/api/names'){
     S.names={};for(const k in(body.names||{})){const v=cleanName(body.names[k]);if(v)S.names[k.toLowerCase()]=v;}
     await kvSet('names',S.names);return{ok:true};
-  }
-  if(path==='/api/import'){
-    const got={};for(const f of body.files||[])Object.assign(got,parseNames(f.name||'',f.text||''));
-    Object.assign(S.names,got);await kvSet('names',S.names);return{names:got,count:Object.keys(got).length};
   }
   if(path==='/api/blueprint'){
     if(!body.name&&!body.zip_b64){const t=S.bps.get((q.id||'').toLowerCase());if(!t)throw new Error('chưa có blueprint');return{tree:t};}
@@ -640,82 +480,54 @@ async function route(u,o){
     }
     return saveBP(body.name,body.text||'');
   }
+  if(path==='/api/layout'){
+    if(body.id===undefined){const l=S.lays.get((q.id||'').toLowerCase());if(!l)throw new Error('chưa có bố cục');return l;}
+    const id=String(body.id).toLowerCase();
+    if(body.parts==null){S.lays.delete(id);await kvDel('lay:'+id);}else{const l={parts:body.parts};S.lays.set(id,l);await kvSet('lay:'+id,l);}
+    return{ok:true};
+  }
   if(path==='/api/build'){
     const sel=(body.ids||[]).filter(i=>S.ids.has(i));if(!sel.length)throw new Error('chưa chọn model nào');
-    await yieldUI();const data=S.pk?buildZip(sel.sort()):await buildStaticZip(sel.sort()),name=safeName(body.filename);
+    await yieldUI();const data=buildZip(sel.sort()),name=safeName(body.filename);
     S.last={name,blob:new Blob([data],{type:'application/zip'})};return{name,size:data.length,dir:''};
   }
   throw new Error('không hỗ trợ '+path);
 }
 function saveBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);}
 const download=()=>S.last&&saveBlob(S.last.blob,S.last.name);
-const exportNames=()=>saveBlob(new Blob([JSON.stringify(S.names,null,1)],{type:'application/json'}),'names.json');
 
 /* ---------- tải pack từ chính host (cùng chỗ với web) ---------- */
 const PACK_SINGLE=['pack/mobs.zip','pack/VanGioi_Full_Pack.zip'];
-const HOST_TIMEOUT=60000,HOST_MAX_BYTES=512*1024*1024;
 async function fetchOne(url,onp,base,span){
-  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),HOST_TIMEOUT);
-  try{
-    const r=await fetch(url,{signal:controller.signal,cache:'no-cache'});
-    if(r.status===404||r.status===410){if(r.body)r.body.cancel().catch(()=>{});return null;}
-    if(!r.ok){if(r.body)r.body.cancel().catch(()=>{});throw new Error(`HTTP ${r.status}`);}
-    const type=(r.headers.get('content-type')||'').toLowerCase();
-    if(type.includes('text/html')){if(r.body)r.body.cancel().catch(()=>{});throw new Error('Host trả về trang HTML thay vì ZIP');}
-    const total=+r.headers.get('content-length')||0,ch=[];let got=0;
-    if(total>HOST_MAX_BYTES)throw new Error('Pack vượt quá giới hạn an toàn 512 MB');
-    if(r.body&&r.body.getReader){const rd=r.body.getReader();for(;;){const{done,value}=await rd.read();if(done)break;ch.push(value);got+=value.length;
-      if(got>HOST_MAX_BYTES)throw new Error('Pack vượt quá giới hạn an toàn 512 MB');
-      onp(base+(total?got/total:0.5)*span,`Đang tải dữ liệu model… ${(got/1048576).toFixed(1)}${total?' / '+(total/1048576).toFixed(1):''} MB`);}}
-    else{const data=new Uint8Array(await r.arrayBuffer());ch.push(data);got=data.length;onp(base+span,`Đã tải ${(got/1048576).toFixed(1)} MB`);}
-    const blob=new Blob(ch),head=new TextDecoder().decode(await blob.slice(0,512).arrayBuffer()).trimStart();
-    if(/^<!doctype\s+html|^<html[\s>]|^<head[\s>]|^<body[\s>]/i.test(head))throw new Error('Host trả về trang 404 HTML thay vì ZIP');
-    return{blob,lm:Date.parse(r.headers.get('last-modified')||'')||0,got};
-  }catch(e){if(e.name==='AbortError')throw new Error(`Hết thời gian chờ khi tải ${url}`);throw e;}
-  finally{clearTimeout(timer);}
+  const r=await fetch(url);if(!r.ok)return null;
+  const total=+r.headers.get('content-length')||0,rd=r.body.getReader(),ch=[];let got=0;
+  for(;;){const{done,value}=await rd.read();if(done)break;ch.push(value);got+=value.length;
+    onp(base+(total?got/total:0.5)*span,`Đang tải dữ liệu model… ${(got/1048576).toFixed(1)}${total?' / '+(total/1048576).toFixed(1):''} MB`);}
+  return{blob:new Blob(ch),lm:Date.parse(r.headers.get('last-modified')||'')||0,got};
 }
 async function fetchHosted(onp){
-  const errors=[];
-  for(let i=0;i<PACK_SINGLE.length;i++){
-    const url=PACK_SINGLE[i];
-    try{const r=await fetchOne(url,onp,i*0.25,0.25);if(!r)continue;
-      const file=new File([r.blob],url.split('/').pop(),{lastModified:r.lm||r.got});
-      hostedZipCache.set(file,validatePack(openZip(new Uint8Array(await file.arrayBuffer()))));return{file};
-    }catch(e){errors.push(`${url}: ${e.message||e}`);}
-  }
-  const parts=[];let lm=0,total=0;
-  for(let i=1;;i++){
-    const url=`pack/mobs.zip.${String(i).padStart(3,'0')}`;
-    try{const r=await fetchOne(url,onp,Math.min(0.5+(i-1)*0.03,0.83),0.03);if(!r)break;
-      total+=r.got;if(total>HOST_MAX_BYTES){errors.push('Các phần pack vượt quá giới hạn an toàn 512 MB.');parts.length=0;break;}
-      parts.push(r.blob);lm=Math.max(lm,r.lm||0);
-    }catch(e){errors.push(`${url}: ${e.message||e}`);parts.length=0;break;}
-  }
-  if(parts.length){
-    try{const file=new File(parts,'mobs.zip',{lastModified:lm||Date.now()});
-      hostedZipCache.set(file,validatePack(openZip(new Uint8Array(await file.arrayBuffer()))));return{file};
-    }catch(e){errors.push(`pack/mobs.zip.001…: ${e.message||e}`);}
-  }
-  return{error:errors.length?errors.slice(-3).join(' · '):'Không tìm thấy pack/mobs.zip, pack/VanGioi_Full_Pack.zip hoặc các phần pack/mobs.zip.001… trên host.'};
+  try{
+    for(const u of PACK_SINGLE){const r=await fetchOne(u,onp,0,0.9);if(r)return new File([r.blob],u.split('/').pop(),{lastModified:r.lm||r.got});}
+    const parts=[];let lm=0;
+    for(let i=1;i<=60;i++){
+      const r=await fetchOne(`pack/mobs.zip.${String(i).padStart(3,'0')}`,onp,Math.min(0.85,(i-1)*0.12),0.12);
+      if(!r)break;parts.push(r.blob);lm+=r.lm||r.got;
+    }
+    if(parts.length)return new File(parts,'mobs.zip',{lastModified:lm});
+  }catch(e){console.warn('Không tải được pack từ host:',e);}
+  return null;
 }
 
 /* ---------- màn hình tải / chọn pack ---------- */
 async function boot(start){
   const $=s=>document.querySelector(s);let full=null,item=null;
   const upd=()=>{$('#fullname').textContent=full?`${full.name} (${(full.size/1048576).toFixed(1)} MB)`:'';$('#itemname').textContent=item?item.name:'';$('#goLoad').disabled=!full;};
-  const prog=(f,t)=>{$('#bar').style.width=Math.round(f*100)+'%';$('#prog').setAttribute('aria-valuenow',String(Math.round(f*100)));$('#pst').textContent=t;};
-  const showManual=(msg,retry=false)=>{$('#manual').style.display='flex';$('#prog').style.display='none';$('#autonote').style.display='block';$('#retryHost').style.display=retry?'inline-block':'none';if(msg)$('#pst').textContent=msg;};
+  const prog=(f,t)=>{$('#bar').style.width=Math.round(f*100)+'%';$('#pst').textContent=t;};
+  const showManual=msg=>{$('#manual').style.display='flex';$('#prog').style.display='none';$('#autonote').style.display='none';if(msg)$('#pst').textContent=msg;};
   const run=async(f,i,rem)=>{
     $('#manual').style.display='none';$('#prog').style.display='block';
     try{await loadFiles(f,i,rem,prog);$('#loader').style.display='none';await start();}
-    catch(e){showManual('Không thể đọc pack: '+e.message,true);console.error(e);}
-  };
-  const attemptHosted=async()=>{
-    $('#manual').style.display='none';$('#retryHost').style.display='none';$('#prog').style.display='block';$('#autonote').style.display='block';prog(0,'Đang thử tải pack từ host…');
-    const result=await fetchHosted(prog);
-    if(!result.file){showManual('Tải tự động thất bại: '+result.error,true);return false;}
-    try{await loadFiles(result.file,null,false,(f,t)=>prog(0.9+f*0.1,t));$('#loader').style.display='none';await start();return true;}
-    catch(e){showManual('Pack tải được nhưng không thể quét: '+e.message,true);return false;}
+    catch(e){showManual('Lỗi: '+e.message);console.error(e);}
   };
   $('#pickFull').onclick=()=>$('#inFull').click();$('#pickItem').onclick=()=>$('#inItem').click();
   $('#inFull').onchange=e=>{full=e.target.files[0]||null;upd();};$('#inItem').onchange=e=>{item=e.target.files[0]||null;upd();};
@@ -724,7 +536,6 @@ async function boot(start){
   ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('on');}));
   dz.addEventListener('drop',e=>{for(const f of e.dataTransfer.files){if(/item/i.test(f.name)&&!/full/i.test(f.name))item=f;else full=f;}upd();});
   $('#goLoad').onclick=()=>run(full,item,$('#remember').checked);
-  $('#retryHost').onclick=()=>attemptHosted();
   $('#forget').onclick=async()=>{for(const k of['pack','item','scan'])await kvDel(k);$('#forget').style.display='none';$('#useSaved').style.display='none';$('#pst').textContent='Đã xóa pack đã lưu trong trình duyệt này.';};
   const noauto=sessionStorage.getItem('vg_noauto');sessionStorage.removeItem('vg_noauto');
   const sp=await kvGet('pack'),si=await kvGet('item');
@@ -733,17 +544,24 @@ async function boot(start){
     $('#useSaved').textContent=`Dùng lại pack đã lưu (${sp.name})`;
     $('#useSaved').onclick=()=>run(new File([sp.blob],sp.name,{lastModified:sp.blob.lastModified||0}),si&&si.blob?new File([si.blob],si.name,{lastModified:si.blob.lastModified||0}):null,true);
   }
-  if(noauto){showManual('Bạn đã chọn nạp pack riêng. Có thể chọn file bên dưới hoặc thử tải lại pack từ host.');$('#retryHost').style.display='inline-block';return;}
-  await attemptHosted();
+  if(noauto){showManual();return;}
+  /* 1) pack nằm cùng host: tự tải, người dùng không cần làm gì */
+  $('#prog').style.display='block';prog(0,'Đang tải dữ liệu model…');
+  const hosted=await fetchHosted(prog);
+  if(hosted){
+    try{await loadFiles(hosted,null,false,(f,t)=>prog(0.9+f*0.1,t));$('#loader').style.display='none';await start();return;}
+    catch(e){console.error(e);}
+  }
+  /* 2) không có pack trên host: dùng pack đã lưu hoặc cho chọn file */
+  if(sp&&sp.blob){$('#manual').style.display='none';$('#useSaved').click();return;}
+  showManual();
 }
-return{route,texture,download,exportNames,boot,ensureVersion,getModelIndex,getItemIndex,getSoundIndex,
-  getItemGroup:id=>dataJson('items/'+id+'.json'),getVersion:ensureVersion,getBuildId:()=>staticVersion&&staticVersion.buildId||'',displayName};
+return{route,texture,download,boot,mapItemTextures:(tx,amap)=>mapTex(tx,amap||S.amap)};
 })();
 
 </script>
 <script>
 const $=s=>document.querySelector(s);
-if(location.protocol==='http:'&&!['localhost','127.0.0.1','::1','[::1]'].includes(location.hostname))location.replace('https:'+location.href.slice(5));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const norm=t=>(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
 const fmt=b=>b>=1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB';
@@ -752,169 +570,98 @@ const isFx=id=>/(^|[_-])(vfx|fx|effect|particle)([_-]|\d|$)/.test(id);
 const j=(u,o)=>LOCAL.route(u,o);
 function toast(t,err){const e=$('#toast');e.textContent=t;e.className=err?'err':'';e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',err?9000:6000);}
 
-let D=null,names={},sel=new Set(),cur=null,open=new Set(),groups=new Map();
+let D=null,names={},sel=new Set(),itemSel=new Set(),cur=null,currentTab='models';
+let itemIndex=null,itemEntries=[],itemByKey=new Map(),itemDataCache=new Map();
+let tabQuery={models:'',items:''},tabCur={models:null,items:null},open=new Set(),itemGroupOpen=new Set(),groups=new Map();
 try{sel=new Set(JSON.parse(localStorage.getItem('vg_sel')||'[]'));}catch(e){}
+try{itemSel=new Set(JSON.parse(localStorage.getItem('vg_item_sel')||'[]'));}catch(e){}
 const saveSel=()=>{try{localStorage.setItem('vg_sel',JSON.stringify([...sel]))}catch(e){}};
-
-const itemState={query:'',page:0,size:40,index:null,shards:new Map(),expanded:new Set(),loading:false,error:''};
-const soundState={query:'',page:0,size:50,index:null,loading:false,error:''};
-let modelInitPromise=null;
-function statusText(id,text){$(id).textContent=text;}
-function make(tag,cls,text){const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el;}
-function setTab(name){
-  if(!['items','model','sounds'].includes(name))return;
-  if(name!=='sounds')document.querySelectorAll('#soundList audio').forEach(audio=>{audio.pause();audio.removeAttribute('src');audio.load();});
-  document.body.classList.toggle('tab-model',name==='model');
-  document.body.classList.toggle('tab-items',name==='items');
-  document.body.classList.toggle('tab-sounds',name==='sounds');
-  document.querySelectorAll('#primaryTabs [role="tab"]').forEach(tab=>{
-    const active=tab.dataset.tab===name;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;
-  });
-  $('#modelView').style.display=name==='model'?'flex':'none';
-  $('#itemView').style.display=name==='items'?'flex':'none';
-  $('#soundView').style.display=name==='sounds'?'flex':'none';
-  if(document.body.classList.contains('drawer-open'))setSide(true,false);
-  if(name==='model'){
-    if(!modelInitPromise){$('#loader').style.display='flex';$('#prog').classList.add('waiting');statusText('#pst','Đang tải index Model…');modelInitPromise=init().then(()=>{$('#loader').style.display='none';$('#prog').classList.remove('waiting');$('#modelRetry').hidden=true;}).catch(e=>{modelInitPromise=null;$('#loader').style.display='none';$('#prog').classList.remove('waiting');statusText('#info','Không tải được chỉ mục model: '+e.message);$('#modelRetry').hidden=false;});}
-    requestAnimationFrame(()=>resize());
-    return modelInitPromise;
-  }else if(name==='items')loadItemTab();
-  else loadSoundTab();
-}
-document.querySelectorAll('#primaryTabs [role="tab"]').forEach((tab,index)=>{
-  tab.onclick=()=>setTab(tab.dataset.tab);
-  tab.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();
-    const tabs=[...document.querySelectorAll('#primaryTabs [role="tab"]')],next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(index+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;
-    tabs[next].focus();setTab(tabs[next].dataset.tab);};
-});
-
-function renderItemDetails(container,groupId){
-  const shard=itemState.shards.get(groupId);container.replaceChildren();
-  if(!shard){container.append(make('small','',itemState.error||'Đang tải thông tin item…'));return;}
-  const query=norm(itemState.query.trim()),matches=(shard.items||[]).filter(entry=>{
-    const key=`${groupId}/${entry.name||''}`,haystack=norm(`${groupId} ${LOCAL.displayName('items',groupId)} ${entry.name||''} ${LOCAL.displayName('items',key)} ${entry.modelRef||''}`);
-    return(!itemState.weaponsOnly||isWeaponEntry(entry))&&(!query||haystack.includes(query));
-  });
-  for(const entry of matches){
-    const row=make('div','data-part'),info=make('div');
-    const itemKey=`${groupId}/${entry.name||''}`,itemLabel=LOCAL.displayName('items',itemKey);
-    info.append(make('code','',itemLabel===itemKey?(entry.name||entry.path||''):`${itemLabel} (${entry.name})`));
-    info.append(make('br'));info.append(make('small','',entry.modelRef||'Không có model reference'));
-    row.append(info);
-    if(entry.modelAvailable&&entry.relatedModelId){
-      const button=make('button','', 'Xem 3D');button.type='button';
-      button.onclick=async()=>{await setTab('model');if(D&&D.byId[entry.relatedModelId])preview(entry.relatedModelId,entry.name);};row.append(button);
-    }else row.append(make('small','',entry.modelAvailable?'Có file model, ngoài danh sách Model':'Không tìm thấy model đích'));
-    container.append(row);
-  }
-  if(!matches.length)container.append(make('small','', 'Không có item phù hợp bộ lọc hiện tại.'));
-}
-const weaponTokens=/sword|blade|weapon|bow|crossbow|spear|dagger|staff|axe|mace|hammer|scythe|katana|trident|gun|rifle|shield|claw|saber|rapier|lance|sickle|whip|wand|flail|knife|pistol|cannon/;
-const isWeaponEntry=entry=>weaponTokens.test(norm(`${entry.name||''} ${entry.modelRef||''}`));
-async function loadItemGroup(id,container){
-  if(itemState.shards.has(id)){const shard=itemState.shards.get(id);itemState.shards.delete(id);itemState.shards.set(id,shard);renderItemDetails(container,id);return;}
-  itemState.error='';renderItemDetails(container,id);
-  try{const data=await LOCAL.getItemGroup(id);if(data.id!==id||!Array.isArray(data.items))throw new Error('Shard item sai cấu trúc');
-    itemState.shards.set(id,data);while(itemState.shards.size>40)itemState.shards.delete(itemState.shards.keys().next().value);renderItemDetails(container,id);}
-  catch(e){itemState.error=e.message;renderItemDetails(container,id);}
-}
-function renderItemPage(){
-  const list=$('#itemList'),query=norm(itemState.query.trim()),items=itemState.index?.items||[];
-  const filtered=items.filter(entry=>{
-    const qmatch=!query||norm(`${entry.id} ${LOCAL.displayName('items',entry.id)}`).includes(query)||(entry.parts||[]).some(part=>norm(`${part.name||''} ${LOCAL.displayName('items',entry.id+'/'+part.name)} ${part.modelRef||''}`).includes(query));
-    const wmatch=!itemState.weaponsOnly||(entry.parts||[]).some(isWeaponEntry);return qmatch&&wmatch;
-  });const pages=Math.max(1,Math.ceil(filtered.length/itemState.size));
-  itemState.page=Math.min(itemState.page,pages-1);const rows=filtered.slice(itemState.page*itemState.size,(itemState.page+1)*itemState.size),fragment=document.createDocumentFragment();
-  for(const entry of rows){
-    const partCount=(entry.parts||[]).filter(part=>(!itemState.weaponsOnly||isWeaponEntry(part))&&(!query||norm(`${entry.id} ${part.name||''} ${part.modelRef||''}`).includes(query))).length;
-    const details=make('details','data-row'),summary=make('summary','',`${LOCAL.displayName('items',entry.id)} · ${partCount}/${entry.count} item phù hợp · ${entry.matchedModels} model liên kết`),body=make('div','data-detail');details.dataset.itemId=entry.id;
-    details.append(summary,body);details.open=itemState.expanded.has(entry.id);
-    details.addEventListener('toggle',()=>{if(details.open){itemState.expanded.add(entry.id);loadItemGroup(entry.id,body);}else itemState.expanded.delete(entry.id);});
-    fragment.append(details);
-  }
-  list.replaceChildren(fragment);$('#itemPagination').hidden=filtered.length===0;
-  for(const details of list.querySelectorAll('details[open]'))loadItemGroup(details.dataset.itemId,details.querySelector('.data-detail'));
-  $('#itemPageLabel').textContent=`Trang ${itemState.page+1}/${pages} · ${filtered.length} nhóm`;
-  $('#itemPrev').disabled=itemState.page===0;$('#itemNext').disabled=itemState.page>=pages-1;
-}
-async function loadItemTab(){
-  if(itemState.index){statusText('#itemStatus',`${itemState.index.items.length} nhóm item · dữ liệu model chi tiết chỉ tải khi mở nhóm.`);renderItemPage();return;}
-  if(itemState.loading)return;itemState.loading=true;$('#itemRetry').hidden=true;$('#itemProgress').hidden=false;statusText('#itemStatus','Đang tải chỉ mục Item…');
-  try{itemState.index=await LOCAL.getItemIndex();statusText('#itemStatus',`${itemState.index.items.length} nhóm item · dữ liệu model chi tiết chỉ tải khi mở nhóm.`);renderItemPage();}
-  catch(e){itemState.error=e.message;statusText('#itemStatus','Không tải được Item: '+e.message);$('#itemRetry').hidden=false;}
-  finally{itemState.loading=false;$('#itemProgress').hidden=true;}
-}
-$('#itemSearch').oninput=e=>{itemState.query=e.target.value;itemState.page=0;if(itemState.index)renderItemPage();};
-$('#itemWeaponsOnly').onchange=e=>{itemState.weaponsOnly=e.target.checked;itemState.page=0;if(itemState.index)renderItemPage();};
-$('#itemPrev').onclick=()=>{itemState.page=Math.max(0,itemState.page-1);renderItemPage();};
-$('#itemNext').onclick=()=>{itemState.page++;renderItemPage();};
-$('#itemRetry').onclick=()=>{itemState.index=null;itemState.error='';loadItemTab();};
-
-const soundKey=path=>{const value=path.replace(/^assets\//,'').replace('/sounds/',':');return value.replace(/\.(ogg|wav|mp3|flac|opus)$/i,'');};
-function renderSoundPage(){
-  document.querySelectorAll('#soundList audio').forEach(audio=>{audio.pause();audio.removeAttribute('src');audio.load();});
-  const list=$('#soundList'),query=norm(soundState.query.trim()),files=soundState.index?.files||[];
-  const filtered=files.filter(x=>!query||norm(`${x.path} ${LOCAL.displayName('sounds',soundKey(x.path))}`).includes(query)||(x.events||[]).some(ev=>norm(`${ev.event} ${LOCAL.displayName('soundEvents',ev.registry.slice(7,-12)+':'+ev.event)}`).includes(query)));
-  const pages=Math.max(1,Math.ceil(filtered.length/soundState.size));soundState.page=Math.min(soundState.page,pages-1);
-  const rows=filtered.slice(soundState.page*soundState.size,(soundState.page+1)*soundState.size),fragment=document.createDocumentFragment();
-  for(const file of rows){
-    const row=make('div','data-row sound-row'),resourceId=soundKey(file.path),soundLabel=LOCAL.displayName('sounds',resourceId),path=make('code','sound-path',soundLabel===resourceId?file.path:soundLabel),play=make('button','', 'Nghe thử'),download=make('a','navlink','Tải');
-    const audioUrl=file.url+'?v='+encodeURIComponent(LOCAL.getBuildId());
-    play.type='button';download.href=audioUrl;download.download=file.path.split('/').pop();download.rel='noopener';
-    const audioHost=make('div','');audioHost.style.gridColumn='1/-1';
-    play.onclick=async()=>{
-      const old=audioHost.querySelector('audio');if(old){old.pause();old.removeAttribute('src');old.load();old.remove();}
-      const audio=document.createElement('audio');audio.controls=true;audio.preload='none';audio.src=audioUrl;audioHost.append(audio);
-      try{await audio.play();}catch(e){statusText('#soundStatus','Không phát được file này trong trình duyệt: '+file.path);}
-    };
-    const events=(file.events||[]).map(x=>LOCAL.displayName('soundEvents',x.registry.slice(7,-12)+':'+x.event)),meta=make('small','sound-meta',`${(file.bytes/1048576).toFixed(2)} MB · ${events.length?events.join(', '):'không có event registry khớp'}`);
-    row.append(path,play,download,meta,audioHost);fragment.append(row);
-  }
-  list.replaceChildren(fragment);$('#soundPagination').hidden=filtered.length===0;
-  $('#soundPageLabel').textContent=`Trang ${soundState.page+1}/${pages} · ${filtered.length} file`;
-  $('#soundPrev').disabled=soundState.page===0;$('#soundNext').disabled=soundState.page>=pages-1;
-}
-async function loadSoundTab(){
-  if(soundState.index){statusText('#soundStatus',`${soundState.index.files.length} file âm thanh · file chỉ tải khi bấm Nghe thử hoặc Tải.`);renderSoundPage();return;}
-  if(soundState.loading)return;soundState.loading=true;$('#soundRetry').hidden=true;$('#soundProgress').hidden=false;statusText('#soundStatus','Đang tải chỉ mục âm thanh…');
-  try{soundState.index=await LOCAL.getSoundIndex();const unresolved=soundState.index.unresolvedReferences?.length||0;
-    statusText('#soundStatus',soundState.index.files.length?`${soundState.index.files.length} file âm thanh · ${unresolved} tham chiếu trong registry không tìm thấy file.`:'Không tìm thấy tài nguyên âm thanh trong pack.');renderSoundPage();}
-  catch(e){soundState.error=e.message;statusText('#soundStatus','Không tải được âm thanh: '+e.message);$('#soundRetry').hidden=false;}
-  finally{soundState.loading=false;$('#soundProgress').hidden=true;}
-}
-$('#soundSearch').oninput=e=>{soundState.query=e.target.value;soundState.page=0;if(soundState.index)renderSoundPage();};
-$('#soundPrev').onclick=()=>{soundState.page=Math.max(0,soundState.page-1);renderSoundPage();};
-$('#soundNext').onclick=()=>{soundState.page++;renderSoundPage();};
-$('#soundRetry').onclick=()=>{soundState.index=null;soundState.error='';loadSoundTab();};
-$('#modelRetry').onclick=()=>{modelInitPromise=null;$('#modelRetry').hidden=true;setTab('model');};
+const saveItemSel=()=>{try{localStorage.setItem('vg_item_sel',JSON.stringify([...itemSel]))}catch(e){}};
+const activeSel=()=>currentTab==='models'?sel:itemSel;
+const activeOpen=()=>currentTab==='models'?open:itemGroupOpen;
 
 async function init(){
-  D=await j('/api/list');D.bps=new Set(D.bps||[]);names=D.names||{};$('#outname').value=D.outName;
-  D.byId={};D.ids.forEach(x=>{x.fam=x.fam||famOf(x.id);x.kb=x.mb+x.res.reduce((a,i)=>a+D.res[i].b,0);D.byId[x.id]=x;});
+  D=await j('/api/list');D.bps=new Set(D.bps||[]);D.lays=new Set(D.layouts||[]);names=D.names||{};$('#outname').value=D.outName;
+  D.byId={};D.ids.forEach(x=>{x.fam=famOf(x.id);x.kb=x.mb+x.res.reduce((a,i)=>a+D.res[i].b,0);D.byId[x.id]=x;});
   sel=new Set([...sel].filter(i=>D.byId[i]));
   render();
 }
+async function loadItemIndex(){
+  if(itemIndex)return itemIndex;
+  const r=await fetch('pack/data/items/index.json',{cache:'force-cache'});
+  if(!r.ok)throw new Error('Không tải được pack/data/items/index.json ('+r.status+')');
+  const doc=await r.json();
+  if(!doc||!Array.isArray(doc.items))throw new Error('Index Item RSP không đúng cấu trúc: thiếu items[]');
+  itemIndex=doc;itemEntries=[];itemByKey.clear();
+  for(const group of doc.items){
+    for(const part of (group.parts||[])){
+      const key=String(group.id)+'::'+String(part.nameId||part.modelPath||part.name);
+      const entry={...part,id:key,key,groupId:String(group.id),groupName:String(group.nameId||group.id),
+        fam:String(group.id),displayName:String(part.nameId||part.name||key)};
+      itemEntries.push(entry);itemByKey.set(key,entry);
+    }
+  }
+  return itemIndex;
+}
+async function loadItemGroup(id){
+  if(itemDataCache.has(id))return itemDataCache.get(id);
+  const p=(async()=>{
+    const r=await fetch('pack/data/items/'+encodeURIComponent(id)+'.json',{cache:'force-cache'});
+    if(!r.ok)throw new Error('Không tải được dữ liệu nhóm Item '+id+' ('+r.status+')');
+    const doc=await r.json();
+    if(!doc||!Array.isArray(doc.items))throw new Error('Dữ liệu nhóm Item không hợp lệ: '+id);
+    return doc;
+  })();
+  itemDataCache.set(id,p);
+  try{return await p;}catch(e){itemDataCache.delete(id);throw e;}
+}
+function itemPayload(entry,groupDoc){
+  const rows=groupDoc.items||[];
+  return rows.find(x=>(entry.nameId&&x.nameId===entry.nameId)||
+    (entry.modelPath&&x.modelPath===entry.modelPath)||
+    (entry.path&&x.path===entry.path))||null;
+}
 function visible(){
-  const q=norm($('#q').value.trim()),hf=$('#hidefx').checked,mp=+$('#minparts').value||1;
-  return D.ids.filter(x=>x.parts>=mp&&!(hf&&isFx(x.id))&&(!q||norm(x.id).includes(q)||norm(names[x.id]||LOCAL.displayName('models',x.id)).includes(q)||norm(x.fam).includes(q)));
+  const q=norm($('#q').value.trim());
+  if(currentTab==='items'){
+    return itemEntries.filter(x=>!q||norm([x.id,x.nameId,x.name,x.groupId,x.modelPath].join(' ')).includes(q));
+  }
+  const hf=$('#hidefx').checked,mp=+$('#minparts').value||1;
+  return D.ids.filter(x=>x.parts>=mp&&!(hf&&isFx(x.id))&&(!q||norm(x.id).includes(q)||norm(names[x.id]||'').includes(q)||norm(x.fam).includes(q)));
 }
 function estimate(){let m=0;const rs=new Set();sel.forEach(id=>{const x=D.byId[id];m+=x.mb;x.res.forEach(i=>rs.add(i));});rs.forEach(i=>m+=D.res[i].b);return m;}
 function updateCount(){
-  const n=sel.size,e=estimate();
-  $('#count').textContent=`Đã tick ${n} model · ước tính ~${fmt(e)} · đang hiện ${[...groups.values()].reduce((a,m)=>a+m.length,0)}/${D.ids.length}`;
-  $('#btnBuild').textContent=n?`Tạo ZIP (${n} model, ~${fmt(e)})`:'Tạo ZIP';
+  const n=activeSel().size,shown=[...groups.values()].reduce((a,m)=>a+m.length,0);
+  if(currentTab==='items'){
+    $('#count').textContent=`Đã tick ${n} item · đang hiện ${shown}/${itemEntries.length} item`;
+    $('#btnBuild').textContent=n?`Tạo ZIP (${n} item)`:'Tạo ZIP Item';
+    $('#btnBuild').disabled=n===0;
+    $('#btnBuild').title='Tạo ZIP resource pack từ các item đã tick trong tab Item';
+  }else{
+    const e=estimate();
+    $('#count').textContent=`Đã tick ${n} model · ước tính ~${fmt(e)} · đang hiện ${shown}/${D.ids.length}`;
+    $('#btnBuild').textContent=n?`Tạo ZIP (${n} model, ~${fmt(e)})`:'Tạo ZIP';
+    $('#btnBuild').disabled=false;
+    $('#btnBuild').title='Tạo ZIP từ các model đã tick';
+  }
 }
 function rowHtml(x){
+  if(currentTab==='items'){
+    const ok=x.modelAvailable!==false;
+    return `<div class="row${cur===x.id?' cur':''}" data-id="${esc(x.id)}" tabindex="0" role="button" aria-label="Xem item ${esc(x.displayName)}"><input type="checkbox" class="cb" aria-label="Chọn item ${esc(x.displayName)}" ${itemSel.has(x.id)?'checked':''}>`+
+      `<span class="item-label">${esc(x.displayName)}</span><small>${esc(x.modelPath||x.path||'')} · ${ok?'có tham chiếu model':'thiếu tham chiếu model'}</small></div>`;
+  }
   return `<div class="row${cur===x.id?' cur':''}" data-id="${esc(x.id)}"><input type="checkbox" class="cb" ${sel.has(x.id)?'checked':''}>`+
-  `<input class="nm" value="${esc(names[x.id]||LOCAL.displayName('models',x.id))}" placeholder="${esc(x.id)}"><small>${esc(x.id)} · ${x.parts} mảnh · ${fmt(x.kb)}</small></div>`;
+  `<input class="nm" value="${esc(names[x.id]||'')}" placeholder="${esc(x.id)}"><small>${esc(x.id)} · ${x.parts} mảnh · ${fmt(x.kb)}</small></div>`;
 }
 let render=function(){
   const vis=visible();groups=new Map();
   vis.forEach(x=>{if(!groups.has(x.fam))groups.set(x.fam,[]);groups.get(x.fam).push(x);});
-  const q=$('#q').value.trim();let h='';
+  const q=$('#q').value.trim(),selection=activeSel(),expanded=activeOpen();let h='';
   for(const [f,m] of groups){
-    const n=m.filter(x=>sel.has(x.id)).length,st=n==0?0:n==m.length?2:1,ex=open.has(f)||q;
-    h+=`<div class="fam" data-f="${esc(f)}"><span class="arr">${ex?'▾':'▸'}</span><input type="checkbox" class="fcb" data-st="${st}" ${st==2?'checked':''}><b>${esc(names[f]||f)}</b><small>${m.length} model</small></div>`;
+    const n=m.filter(x=>selection.has(x.id)).length,st=n===0?0:n===m.length?2:1,ex=expanded.has(f)||q;
+    const title=currentTab==='items'?(m[0]?.groupName||f):(names[f]||f);
+    h+=`<div class="fam" data-f="${esc(f)}"><span class="arr">${ex?'▾':'▸'}</span><input type="checkbox" class="fcb" data-st="${st}" ${st==2?'checked':''}><b>${esc(title)}</b><small>${m.length} ${currentTab==='items'?'item':'model'}</small></div>`;
     if(ex)m.forEach(x=>h+=rowHtml(x));
   }
   const sc=$('#list').scrollTop;$('#list').innerHTML=h||'<div style="padding:16px;color:var(--mt)">Không có kết quả.</div>';$('#list').scrollTop=sc;
@@ -924,15 +671,35 @@ let render=function(){
 $('#list').addEventListener('click',e=>{
   const t=e.target,fam=t.closest('.fam'),row=t.closest('.row');
   if(t.classList.contains('nm'))return;
-  if(fam){const f=fam.dataset.f;
-    if(t.classList.contains('fcb')){const m=groups.get(f)||[];const all=m.every(x=>sel.has(x.id));m.forEach(x=>all?sel.delete(x.id):sel.add(x.id));saveSel();render();return;}
-    open.has(f)?open.delete(f):open.add(f);render();return;}
-  if(row){const id=row.dataset.id;
-    if(t.classList.contains('cb')){t.checked?sel.add(id):sel.delete(id);saveSel();
-      const f=D.byId[id].fam,fe=document.querySelector(`.fam[data-f="${CSS.escape(f)}"] .fcb`);
-      if(fe){const m=groups.get(f)||[],n=m.filter(x=>sel.has(x.id)).length;fe.checked=n==m.length;fe.indeterminate=n>0&&n<m.length;}
-      updateCount();return;}
-    preview(id);if(matchMedia('(max-width: 760px)').matches)setSide(true,false);}
+  if(fam){
+    const f=fam.dataset.f,selection=activeSel();
+    if(t.classList.contains('fcb')){
+      const m=groups.get(f)||[],all=m.length>0&&m.every(x=>selection.has(x.id));
+      m.forEach(x=>all?selection.delete(x.id):selection.add(x.id));
+      currentTab==='models'?saveSel():saveItemSel();render();return;
+    }
+    const expanded=activeOpen();expanded.has(f)?expanded.delete(f):expanded.add(f);render();return;
+  }
+  if(row){
+    const id=row.dataset.id;
+    if(t.classList.contains('cb')){
+      const selection=activeSel();t.checked?selection.add(id):selection.delete(id);
+      currentTab==='models'?saveSel():saveItemSel();
+      if(currentTab==='models'){
+        const f=D.byId[id].fam,fe=document.querySelector(`.fam[data-f="${CSS.escape(f)}"] .fcb`);
+        if(fe){const m=groups.get(f)||[],n=m.filter(x=>selection.has(x.id)).length;fe.checked=n==m.length;fe.indeterminate=n>0&&n<m.length;}
+        updateCount();
+      }else render();
+      return;
+    }
+    setView('single',id);
+  }
+});
+$('#list').addEventListener('keydown',e=>{
+  const row=e.target.closest('.row');
+  if(!row||!['Enter',' '].includes(e.key))return;
+  if(e.target.classList.contains('cb')||e.target.classList.contains('nm'))return;
+  e.preventDefault();setView('single',row.dataset.id);
 });
 let sv;
 $('#list').addEventListener('input',e=>{
@@ -944,33 +711,72 @@ $('#list').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.classList
 async function saveNames(){try{await j('/api/names',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({names})});}catch(e){toast('Không lưu được tên: '+e.message,1);}}
 let qt;$('#q').oninput=()=>{clearTimeout(qt);qt=setTimeout(render,150);};
 $('#hidefx').onchange=$('#minparts').oninput=render;
-$('#selvis').onclick=()=>{for(const m of groups.values())m.forEach(x=>sel.add(x.id));saveSel();render();};
-$('#clr').onclick=()=>{sel.clear();saveSel();render();};
-$('#btnChange').onclick=()=>{sessionStorage.setItem('vg_noauto','1');location.reload();};
-$('#btnExpN').onclick=()=>{saveNames().then(()=>LOCAL.exportNames());};
-$('#btnImport').onclick=()=>$('#file').click();
-$('#file').onchange=async e=>{
-  const files=[...e.target.files];if(!files.length)return;
-  const out=[];for(const f of files)out.push({name:f.name,text:await f.text()});
-  try{const r=await j('/api/import',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({files:out})});
-    Object.assign(names,r.names);render();toast(`Đã nhập ${r.count} tên.`);}catch(err){toast('Lỗi nhập tên: '+err.message,1);}
-  e.target.value='';
-};
+$('#selvis').onclick=()=>{const s=activeSel();for(const m of groups.values())m.forEach(x=>s.add(x.id));currentTab==='models'?saveSel():saveItemSel();render();};
+$('#clr').onclick=()=>{activeSel().clear();currentTab==='models'?saveSel():saveItemSel();render();};
+async function buildItemZip(keys,onProgress){
+  if(!itemIndex)await loadItemIndex();
+  const chosen=keys.map(k=>itemByKey.get(k)).filter(Boolean);
+  if(!chosen.length)throw new Error('Chưa tick item hợp lệ nào.');
+  const files={},missingTextures=[];
+  const enc=o=>new TextEncoder().encode(JSON.stringify(o));
+  files['pack.mcmeta']=[enc({pack:{pack_format:46,supported_formats:[32,9999],description:'VanGioi - Item RSP (selected items)'}}),{level:9}];
+  const textureRefs=new Set();
+  let done=0;
+  for(const entry of chosen){
+    const doc=await loadItemGroup(entry.groupId),record=itemPayload(entry,doc);
+    if(!record||!record.itemModelData)throw new Error(`${entry.displayName}: thiếu itemModelData trong nhóm ${entry.groupId}`);
+    const raw=record.itemModelData;
+    const model={...raw,textures:LOCAL.mapItemTextures(raw.textures,itemIndex.amap)};
+    const modelPath=String(entry.modelPath||record.modelPath||record.path||'').replace(/^\/+/, '');
+    if(!/^assets\/[^/]+\/models\/.+\.json$/i.test(modelPath))throw new Error(`${entry.displayName}: đường dẫn model không hợp lệ (${modelPath||'trống'})`);
+    files[modelPath]=[enc(model),{level:9}];
+    Object.values(model.textures||{}).forEach(v=>{if(typeof v==='string'&&v[0]!=='#')textureRefs.add(v);});
+    onProgress&&onProgress(++done,chosen.length,`Đang chuẩn bị item ${done}/${chosen.length}`);
+  }
+  let texDone=0;
+  for(const ref of textureRefs){
+    const k=ref.indexOf(':'),ns=k<0?'minecraft':ref.slice(0,k),name=k<0?ref:ref.slice(k+1);
+    const path=`assets/${ns}/textures/${name}.png`;
+    try{
+      const r=await fetch('pack/data/resources/'+path,{cache:'force-cache'});
+      if(!r.ok){missingTextures.push(`${ref} (${r.status})`);continue;}
+      files[path]=[new Uint8Array(await r.arrayBuffer()),{level:0}];
+      try{const mr=await fetch('pack/data/resources/'+path+'.mcmeta',{cache:'force-cache'});if(mr.ok)files[path+'.mcmeta']=[new Uint8Array(await mr.arrayBuffer()),{level:9}];}catch(e){}
+    }catch(e){missingTextures.push(ref);}
+    onProgress&&onProgress(++texDone,textureRefs.size,`Đang tải texture ${texDone}/${textureRefs.size}`);
+  }
+  // Async fflate API: do not block the page for large multi-item selections.
+  const cleanZip=await new Promise((resolve,reject)=>fflate.zip(files,{level:9},(err,out)=>err?reject(err):resolve(out)));
+  const data=corruptZipCrc(cleanZip);
+  const name=safeItemZipName($('#outname').value);
+  saveBlob(new Blob([data],{type:'application/zip'}),name);
+  return{name,size:data.length,count:chosen.length,missingTextures};
+}
+function safeItemZipName(v){let n=String(v||'VanGioi_Items_Pack.zip').replace(/^.*[\/]/,'').replace(/[^\w.\-\u00C0-\u1EF9]/g,'_').replace(/^[._]+|[._]+$/g,'')||'VanGioi_Items_Pack';n=n.replace(/\.zip$/i,'');return n+'_Items.zip';}
 $('#btnBuild').onclick=async()=>{
-  if(!sel.size)return toast('Chưa tick con nào.',1);
-  const b=$('#btnBuild');b.disabled=true;const old=b.textContent;b.textContent='Đang tạo…';
-  try{await saveNames();
-    const r=await j('/api/build',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ids:[...sel],filename:$('#outname').value})});
-    toast(`Đã tạo ${r.name} (${fmt(r.size)}) — trình duyệt đang tải về.\nFile chỉ nằm trên máy bạn, không gửi đi đâu.`);
-    LOCAL.download();
+  const b=$('#btnBuild');
+  const itemMode=currentTab==='items',selection=itemMode?itemSel:sel;
+  if(!selection.size)return toast('Chưa tick mục nào.',1);
+  b.disabled=true;const old=b.textContent;b.textContent='Đang tạo ZIP…';
+  try{
+    if(itemMode){
+      const r=await buildItemZip([...selection],(i,n,msg)=>{b.textContent=msg;});
+      const extra=r.missingTextures.length?`\nCảnh báo: ${r.missingTextures.length} texture không tìm thấy; xem console để biết chi tiết.`:'';
+      if(r.missingTextures.length)console.warn('Item ZIP missing textures:',r.missingTextures);
+      toast(`Đã tạo ${r.name} (${fmt(r.size)}) với ${r.count} item.${extra}`);
+    }else{
+      await saveNames();
+      const r=await j('/api/build',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ids:[...sel],filename:$('#outname').value})});
+      toast(`Đã tạo ${r.name} (${fmt(r.size)}) — trình duyệt đang tải về.\nFile chỉ nằm trên máy bạn, không gửi đi đâu.`);
+      LOCAL.download();
+    }
   }catch(err){toast('Lỗi tạo ZIP: '+err.message,1);}
-  b.disabled=false;b.textContent=old;updateCount();
+  b.disabled=false;updateCount();
 };
 
 /* ------------------------------------------------------------ 3D */
-const cv=$('#cv');let renderer=null;
-try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true});renderer.outputEncoding=THREE.sRGBEncoding;}
-catch(e){$('#prog').style.display='none';$('#manual').style.display='none';$('#autonote').textContent='Thiết bị hoặc trình duyệt không khởi tạo được WebGL. Hãy bật tăng tốc phần cứng hoặc thử trình duyệt khác.';$('#pst').textContent='Không thể hiển thị model 3D trên thiết bị này.';console.error('WebGL không khả dụng:',e);}
+const cv=$('#cv'),renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true});
+renderer.outputEncoding=THREE.sRGBEncoding;
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x1b1d22);
 const cam=new THREE.PerspectiveCamera(40,1,0.1,8000);
 const orb={th:-0.6,ph:1.15,d:60,t:new THREE.Vector3(8,8,8)};
@@ -979,7 +785,7 @@ const boxLine=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeomet
 boxLine.position.set(8,8,8);scene.add(boxLine);
 const grid=new THREE.GridHelper(64,16,0x39414f,0x2a303b);grid.position.set(8,0,8);scene.add(grid);
 const root=new THREE.Group();scene.add(root);
-function resize(){if(!renderer)return;const r=$('#stage').getBoundingClientRect();renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.75));renderer.setSize(r.width,r.height,false);cam.aspect=r.width/Math.max(1,r.height);cam.updateProjectionMatrix();gal.dirty=true;}
+function resize(){const r=$('#stage').getBoundingClientRect();renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.setSize(r.width,r.height,false);cam.aspect=r.width/Math.max(1,r.height);cam.updateProjectionMatrix();gal.dirty=true;}
 let drag=null;
 cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,pan:e.button!==0||e.shiftKey};cv.setPointerCapture(e.pointerId);});
 cv.addEventListener('pointerup',()=>drag=null);
@@ -1044,19 +850,6 @@ function buildPart(json,texs){
   const box=new THREE.Box3().setFromObject(g),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());
   return{group:g,size:Math.max(size.x,size.y,size.z,1),center};
 }
-function applyItemDisplay(part,display){
-  const transform=display&&display.gui;if(!transform)return;
-  const rotation=Array.isArray(transform.rotation)?transform.rotation:[0,0,0];
-  const translation=Array.isArray(transform.translation)?transform.translation:[0,0,0];
-  const scale=Array.isArray(transform.scale)?transform.scale:[1,1,1];
-  const frame=new THREE.Group(),gui=new THREE.Group();part.group.position.set(-8,-8,-8);gui.add(part.group);frame.add(gui);
-  gui.position.set(8+(Number(translation[0])||0)*16,8+(Number(translation[1])||0)*16,8+(Number(translation[2])||0)*16);
-  gui.rotation.set((Number(rotation[0])||0)*RAD,(Number(rotation[1])||0)*RAD,(Number(rotation[2])||0)*RAD,'XYZ');
-  gui.scale.set(Number(scale[0])||1,Number(scale[1])||1,Number(scale[2])||1);
-  frame.updateMatrixWorld(true);const box=new THREE.Box3().setFromObject(gui),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());
-  gui.position.sub(center);frame.updateMatrixWorld(true);
-  part.group=frame;part.center.set(0,0,0);part.size=Math.max(size.x,size.y,size.z,1);
-}
 const texCache=new Map();
 function loadTex(r){
   if(texCache.size>500){texCache.forEach(p=>p.then(t=>t&&t.dispose()));texCache.clear();}
@@ -1071,13 +864,11 @@ function loadTex(r){
   }catch(e){return null;}})());
   return texCache.get(r);
 }
-async function fetchParts(id,onlyPart=null){
-  const suffix=onlyPart?'&part='+encodeURIComponent(onlyPart):'';
-  const m=await j('/api/model?id='+encodeURIComponent(id)+suffix),rs=new Set();
+async function fetchParts(id){
+  const m=await j('/api/model?id='+encodeURIComponent(id)),rs=new Set();
   m.parts.forEach(p=>Object.values(p.json.textures||{}).forEach(v=>{if(typeof v==='string'&&v[0]!=='#')rs.add(v);}));
-  const texs={},resources=[...rs];
-  for(let i=0;i<resources.length;i+=6)await Promise.all(resources.slice(i,i+6).map(async r=>texs[r]=await loadTex(r)));
-  const out=[];m.parts.forEach(p=>{const b=buildPart(p.json,texs);if(b){b.name=p.name;b.visible=true;if(onlyPart)applyItemDisplay(b,p.json.display);out.push(b);}});
+  const texs={};await Promise.all([...rs].map(async r=>texs[r]=await loadTex(r)));
+  const out=[];m.parts.forEach(p=>{const b=buildPart(p.json,texs);if(b){b.name=p.name;b.visible=true;b.tf={pos:[0,0,0],rot:[0,0,0]};out.push(b);}});
   return{parts:out,texCount:rs.size,missing:[...rs].filter(r=>!texs[r]).length};
 }
 function disposeGroup(g){g.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose();});}
@@ -1103,6 +894,36 @@ function bpMats(tree){
   (tree||[]).forEach(n=>walk(n,new THREE.Matrix4()));
   return m;
 }
+const RAD=Math.PI/180;
+function manMat(tf){
+  const R=new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(tf.rot[0]*RAD,tf.rot[1]*RAD,tf.rot[2]*RAD,'ZYX'));
+  return new THREE.Matrix4().makeTranslation(tf.pos[0]+8,tf.pos[1]+8,tf.pos[2]+8).multiply(R).multiply(new THREE.Matrix4().makeTranslation(-8,-8,-8));
+}
+function tfFromMat(M){
+  const e=M.elements,R=new THREE.Matrix4().extractRotation(M),re=R.elements;
+  const pos=[e[12]+re[0]*8+re[4]*8+re[8]*8-8,e[13]+re[1]*8+re[5]*8+re[9]*8-8,e[14]+re[2]*8+re[6]*8+re[10]*8-8];
+  const eu=new THREE.Euler().setFromRotationMatrix(R,'ZYX'),r2=v=>Math.round(v*100)/100;
+  return{pos:pos.map(r2),rot:[eu.x/RAD,eu.y/RAD,eu.z/RAD].map(r2)};
+}
+function applyLay(list,lay){list.forEach(p=>{const t=lay&&lay.parts&&lay.parts[p.name];p.tf=t?{pos:t.pos.slice(),rot:t.rot.slice()}:{pos:[0,0,0],rot:[0,0,0]};});}
+/* bộ xương người chuẩn (đoán): [pivot, cha] */
+const SK={body:[[0,12,0],null],head:[[0,24,0],'body'],hat:[[0,28,0],'head'],hair:[[0,26,0],'head'],
+ leftarm:[[6,22,0],'body'],rightarm:[[-6,22,0],'body'],leftforearm:[[6,16,0],'leftarm'],rightforearm:[[-6,16,0],'rightarm'],
+ lefthand:[[6,10,0],'leftforearm'],righthand:[[-6,10,0],'rightforearm'],
+ leftleg:[[2,12,0],'body'],rightleg:[[-2,12,0],'body'],leftfoot:[[2,3,0],'leftleg'],rightfoot:[[-2,3,0],'rightleg'],
+ leftwing:[[3,22,3],'body'],rightwing:[[-3,22,3],'body'],tail:[[0,10,3],'body'],cape:[[0,22,3],'body']};
+function skKey(name,id){
+  let k=bn(name).replace(/_/g,'');
+  if(k===bn(id).replace(/_/g,'')||['torso','chest','root','main'].includes(k))return'body';
+  k=k.replace(/^l(?=arm|leg|hand|foot|forearm|wing)/,'left').replace(/^r(?=arm|leg|hand|foot|forearm|wing)/,'right');
+  k=k.replace(/^(left|right)(upperarm|shoulder)$/,'$1arm').replace(/^(left|right)(lowerarm)$/,'$1forearm');
+  return SK[k]?k:null;
+}
+function skTree(){
+  const mk=k=>({name:k,origin:SK[k][0],rotation:[0,0,0],children:Object.keys(SK).filter(c=>SK[c][1]===k).map(mk)});
+  return[mk('body')];
+}
+
 /* đặt các mảnh theo chế độ; trả về số mảnh không có trong blueprint */
 function placeParts(list,mode,tree){
   const vis=list.filter(p=>p.visible);let unplaced=0;
@@ -1110,6 +931,8 @@ function placeParts(list,mode,tree){
   if(mode==='grid'){
     const step=Math.max(16,...vis.map(p=>p.size))*1.2,cols=Math.max(1,Math.ceil(Math.sqrt(vis.length)));
     vis.forEach((p,i)=>p.group.position.set((i%cols)*step-p.center.x+8,-p.center.y+Math.min(p.size,16)/2,Math.floor(i/cols)*step-p.center.z+8));
+  }else if(mode==='manual'){
+    list.forEach(p=>{p.group.matrixAutoUpdate=false;p.group.matrix.copy(manMat(p.tf));p.group.matrixWorldNeedsUpdate=true;});
   }else if(mode==='assembled'&&tree){
     const mats=bpMats(tree);
     list.forEach(p=>{const M=mats.get(bn(p.name));
@@ -1124,33 +947,67 @@ const curMode=()=>document.querySelector('input[name=mode]:checked').value;
 /* ----------------------------------------------- xem 1 model */
 let parts=[],token=0,labelEls=[],curBP=null,view='single';
 function clearParts(){while(root.children.length){const c=root.children.pop();disposeGroup(c);}parts=[];}
-async function preview(id,onlyPart=null){
-  cur=id;document.querySelectorAll('.row').forEach(r=>r.classList.toggle('cur',r.dataset.id===id));
-  const my=++token;$('#info').textContent='Đang tải '+(onlyPart?onlyPart+' · ':'')+id+'…';
+async function preview(id){
+  cur=id;tabCur.models=id;document.querySelectorAll('.row').forEach(r=>r.classList.toggle('cur',r.dataset.id===id));
+  const my=++token;$('#info').textContent='Đang tải '+id+'…';
   try{
-    const r=await fetchParts(id,onlyPart);curBP=onlyPart?null:await getBP(id);
+    const r=await fetchParts(id);curBP=await getBP(id);const lay=await getLay(id);
     if(my!==token)return;
-    clearParts();parts=r.parts;parts.forEach(p=>root.add(p.group));
+    clearParts();parts=r.parts;selPart=null;applyLay(parts,lay);parts.forEach(p=>root.add(p.group));
     layout(true);renderChips();
-    const nm=names[id]||LOCAL.displayName('models',id);
-    infoBase=`${onlyPart?'Item '+onlyPart+' · preview theo display.gui · ':''}${nm} — ${parts.length} mảnh có hình, ${r.texCount} texture${r.missing?`, ${r.missing} texture thiếu (hiện màu tím)`:''}. `;
+    const nm=names[id]?`${names[id]} (${id})`:id;
+    infoBase=`${nm} — ${parts.length} mảnh có hình, ${r.texCount} texture${r.missing?`, ${r.missing} texture thiếu (hiện màu tím)`:''}. `;
     updInfo();
-  }catch(e){$('#info').textContent='Lỗi: '+e.message;}
+  }catch(e){if(my===token){clearParts();renderChips();$('#info').textContent='Không thể mở model '+id+': '+e.message;}}
+}
+async function previewItem(key){
+  const entry=itemByKey.get(key);
+  if(!entry){$('#info').textContent='Không tìm thấy item trong index: '+key;return;}
+  cur=key;tabCur.items=key;curBP=null;
+  document.querySelectorAll('.row').forEach(r=>r.classList.toggle('cur',r.dataset.id===key));
+  const my=++token;$('#info').textContent='Đang tải item '+entry.displayName+'…';
+  try{
+    const groupDoc=await loadItemGroup(entry.groupId),record=itemPayload(entry,groupDoc);
+    if(!record)throw new Error('Không tìm thấy item trong dữ liệu nhóm '+entry.groupId);
+    const raw=record.itemModelData;
+    if(!raw||!Array.isArray(raw.elements))throw new Error('Item không có itemModelData.elements hợp lệ (model nguồn có thể bị thiếu)');
+    const json={...raw,textures:LOCAL.mapItemTextures(raw.textures,itemIndex&&itemIndex.amap)};
+    const refs=new Set(Object.values(json.textures||{}).filter(v=>typeof v==='string'&&v[0]!=='#'));
+    const texs={};await Promise.all([...refs].map(async r=>texs[r]=await loadTex(r)));
+    const lay=await getLay(key);
+    const b=buildPart(json,texs),out=[];
+    if(b){b.name=entry.name||entry.nameId||entry.key;b.visible=true;b.tf={pos:[0,0,0],rot:[0,0,0]};out.push(b);}
+    if(my!==token){out.forEach(p=>disposeGroup(p.group));return;}
+    clearParts();parts=out;selPart=null;applyLay(parts,lay);parts.forEach(p=>root.add(p.group));
+    layout(true);renderChips();
+    const missing=[...refs].filter(r=>!texs[r]).length;
+    infoBase=`Item ${entry.displayName} — ${parts.length?'preview đã tải':'không có hình học render được'}, ${refs.size} texture${missing?`, ${missing} texture thiếu (hiện màu tím)`:''}. `;
+    updInfo();
+    if(!parts.length)$('#info').textContent=`Không thể render item ${entry.displayName}: item không có mặt hình học hợp lệ.`;
+  }catch(e){
+    if(my===token){clearParts();renderChips();infoBase='';$('#info').textContent='Không thể mở item '+entry.displayName+': '+e.message;}
+  }
 }
 let infoBase='',lastUnplaced=0;
 function updInfo(){
   if(!cur)return;const m=curMode();let t=infoBase;
+  if(currentTab==='items'){
+    t+='Đang ở tab Item; nhấp item khác trong danh sách để đổi preview. Camera: kéo để xoay, chuột phải/Shift để dời, lăn chuột để zoom.';
+    $('#info').textContent=t;return;
+  }
   if(m==='assembled'){t+=curBP?(lastUnplaced?`Đã lắp theo blueprint; ${lastUnplaced} mảnh không có trong blueprint (nằm ở gốc). `:'Đã lắp theo blueprint. '):
     'Chưa có blueprint cho model này — bấm "Nạp blueprint…" (file .bbmodel). ';
     t+='Nếu lệch, thử đổi "xoay bone" / "tâm (8,8,8)".';}
-  else t+='Tách từng mảnh hoặc ghép chồng; để lắp đúng vị trí, nạp blueprint ModelEngine rồi chọn "Lắp ráp theo blueprint".';
+  else if(m==='manual')t+='Bấm vào mảnh trên hình (hoặc tên mảnh bên dưới) rồi chỉnh X/Y/Z và góc xoay; hoặc bấm "Đoán theo bộ xương người" / "Lấy từ blueprint" để có điểm xuất phát. Nhớ "Lưu bố cục". ';
+  else t+='Vị trí lắp ráp do blueprint ModelEngine quyết định; chọn "Lắp ráp theo blueprint" sau khi nạp file .bbmodel.';
   $('#info').textContent=t;
 }
 function layout(fit){
   const mode=curMode();let eff=mode;
   if(mode==='assembled'&&!curBP)eff='overlay';
+  $('#editor').style.display=(view==='single'&&mode==='manual')?'flex':'none';
   lastUnplaced=placeParts(parts,eff,curBP);
-  boxLine.visible=$('#frame').checked&&eff!=='grid';grid.visible=eff!=='grid';
+  boxLine.visible=$('#frame').checked&&eff!=='grid';grid.visible=eff!=='grid';updSel();
   if(fit)fitCam();
   const hud=$('#hud');hud.innerHTML='';labelEls=[];
   if(eff==='grid')parts.filter(p=>p.visible).forEach(p=>{const s=document.createElement('span');s.textContent=p.name;hud.appendChild(s);labelEls.push([s,p]);});
@@ -1166,23 +1023,30 @@ function renderChips(){
   const mk=(t,fn,cls)=>{const b=document.createElement('button');b.textContent=t;if(cls)b.className=cls;b.onclick=fn;w.appendChild(b);return b;};
   mk('Hiện hết',()=>{parts.forEach(p=>p.visible=true);layout(true);renderChips();});
   mk('Ẩn hết',()=>{parts.forEach(p=>p.visible=false);layout();renderChips();});
-  parts.forEach(p=>{const b=mk(p.name,()=>{p.visible=!p.visible;layout();renderChips();},p.visible?'':'off');b.title='Bấm: ẩn/hiện';});
+  parts.forEach(p=>{const b=mk(p.name,e=>{
+    if(curMode()==='manual'&&!e.shiftKey){selectPart(p);renderChips();return;}
+    p.visible=!p.visible;layout();renderChips();},(p.visible?'':'off')+(p===selPart?' sel':''));
+    b.title=curMode()==='manual'?'Bấm: chọn mảnh · Shift+bấm: ẩn/hiện':'Bấm: ẩn/hiện';});
 }
 
 /* ----------------------------------------------- thư viện (nhiều model) */
 const gal={page:0,size:24,tiles:[],dirty:true,hover:null,sig:''};
 function disposeTiles(){gal.tiles.forEach(t=>{t.parts.forEach(p=>disposeGroup(p.group));t.dead=true;});gal.tiles=[];gal.hover=null;}
-function tileName(id){return names[id]||LOCAL.displayName('models',id);}
+function tileName(id){return names[id]||id;}
 function buildGallery(resetPage){
   disposeTiles();const vis=visible(),n=Math.max(1,Math.ceil(vis.length/gal.size));
   if(resetPage)gal.page=0;gal.page=Math.min(gal.page,n-1);
-  $('#gpage').textContent=`Trang ${gal.page+1}/${n} · ${vis.length} model`;
+  $('#gpage').textContent=`Trang ${gal.page+1}/${n} · ${vis.length} ${currentTab==='items'?'item':'model'}`;
   const gw=$('#gwrap');gw.innerHTML='';gw.scrollTop=0;
   vis.slice(gal.page*gal.size,(gal.page+1)*gal.size).forEach(x=>{
     const el=document.createElement('div');el.className='tile';el.dataset.id=x.id;
-    el.innerHTML=`<div class="tbar"><input type="checkbox" class="tcb" ${sel.has(x.id)?'checked':''}><span class="tname">${esc(tileName(x.id))}</span></div><div class="tbody"></div><div class="tfoot">${esc(x.id)} · ${x.parts} mảnh · ${fmt(x.kb)}</div>`;
+    const isItem=currentTab==='items';
+    const selected=activeSel().has(x.id);
+    const title=isItem?x.displayName:tileName(x.id);
+    const foot=isItem?(x.modelAvailable===false?'thiếu model nguồn':(x.modelPath||x.path||'')):`${x.id} · ${x.parts} mảnh · ${fmt(x.kb)}`;
+    el.innerHTML=`<div class="tbar"><input type="checkbox" class="tcb" aria-label="Chọn ${isItem?'item':'model'} ${esc(title)}" ${selected?'checked':''}><span class="tname">${esc(title)}</span></div><div class="tbody"></div><div class="tfoot">${esc(foot)}</div>`;
     gw.appendChild(el);
-    const t={id:x.id,el,body:el.querySelector('.tbody'),scene:new THREE.Scene(),cam:new THREE.PerspectiveCamera(40,1,0.1,8000),parts:[],o:{th:-0.6,ph:1.15,d:60,t:new THREE.Vector3()},loaded:false,bp:null};
+    const t={id:x.id,el,body:el.querySelector('.tbody'),scene:new THREE.Scene(),cam:new THREE.PerspectiveCamera(40,1,0.1,8000),parts:[],o:{th:-0.6,ph:1.15,d:60,t:new THREE.Vector3()},loaded:false,bp:null,dead:false,isItem};
     gal.tiles.push(t);
   });
   gal.dirty=true;
@@ -1190,22 +1054,35 @@ function buildGallery(resetPage){
 }
 async function loadTile(t){
   try{
-    const r=await fetchParts(t.id);if(t.dead){r.parts.forEach(p=>disposeGroup(p.group));return;}
-    t.bp=await getBP(t.id);t.parts=r.parts;r.parts.forEach(p=>t.scene.add(p.group));
-    t.loaded=true;layoutTile(t);
-  }catch(e){}
+    let r;
+    if(t.isItem){
+      const entry=itemByKey.get(t.id);if(!entry)throw new Error('Item không tồn tại');
+      const doc=await loadItemGroup(entry.groupId),record=itemPayload(entry,doc);
+      if(!record||!record.itemModelData)throw new Error('Thiếu itemModelData');
+      const raw=record.itemModelData,json={...raw,textures:LOCAL.mapItemTextures(raw.textures,itemIndex&&itemIndex.amap)};
+      const refs=new Set(Object.values(json.textures||{}).filter(v=>typeof v==='string'&&v[0]!=='#')),texs={};
+      await Promise.all([...refs].map(async ref=>texs[ref]=await loadTex(ref)));
+      const b=buildPart(json,texs);r={parts:[]};if(b){b.name=entry.displayName;b.visible=true;b.tf={pos:[0,0,0],rot:[0,0,0]};r.parts.push(b);}
+      if(t.dead){r.parts.forEach(p=>disposeGroup(p.group));return;}
+      t.lay=null;
+    }else{
+      r=await fetchParts(t.id);if(t.dead){r.parts.forEach(p=>disposeGroup(p.group));return;}
+      t.bp=await getBP(t.id);t.lay=await getLay(t.id);applyLay(r.parts,t.lay);
+    }
+    t.parts=r.parts;r.parts.forEach(p=>t.scene.add(p.group));t.loaded=true;layoutTile(t);
+  }catch(e){t.el.classList.add('tile-error');t.body.textContent='Không thể tải preview: '+e.message;t.el.title=e.message;}
   gal.dirty=true;
 }
 function layoutTile(t){
-  const m=curMode(),eff=(m==='assembled'&&t.bp)?'assembled':(m==='overlay'?'overlay':'grid');
+  const m=curMode(),eff=(m==='assembled'&&t.bp)?'assembled':(m==='manual'&&t.lay)?'manual':(m==='overlay'?'overlay':'grid');
   placeParts(t.parts,eff,t.bp);t.scene.updateMatrixWorld(true);
   const b=boxOf(t.parts);if(!b)return;const c=b.getCenter(new THREE.Vector3()),s=b.getSize(new THREE.Vector3());
   t.o.t.copy(c);t.o.d=Math.max(14,Math.max(s.x,s.y,s.z)*((m==='grid'&&eff==='grid')?1.3:1.9));
 }
 function relayoutTiles(){gal.tiles.forEach(t=>t.loaded&&layoutTile(t));gal.dirty=true;}
-function syncTiles(){gal.tiles.forEach(t=>{t.el.querySelector('.tcb').checked=sel.has(t.id);t.el.querySelector('.tname').textContent=tileName(t.id);});}
+function syncTiles(){gal.tiles.forEach(t=>{t.el.querySelector('.tcb').checked=activeSel().has(t.id);t.el.querySelector('.tname').textContent=t.isItem?(itemByKey.get(t.id)?.displayName||t.id):tileName(t.id);});}
 function galRender(){
-  if(!renderer||!gal.dirty&&!gal.hover)return;gal.dirty=false;
+  if(!gal.dirty&&!gal.hover)return;gal.dirty=false;
   const cr=cv.getBoundingClientRect();
   renderer.setScissorTest(false);renderer.setClearColor(0x14161a,1);renderer.clear();
   renderer.setScissorTest(true);
@@ -1220,13 +1097,53 @@ function galRender(){
   }
   renderer.setScissorTest(false);renderer.setViewport(0,0,cv.clientWidth,cv.clientHeight);
 }
-function setView(v){
-  view=v;const g=v==='gallery';
-  document.body.classList.toggle('gallery-view',g);
+function setView(v,targetId=null){
+  view=v;
+  const radio=document.querySelector(`input[name=view][value="${v}"]`);
+  if(radio)radio.checked=true;
+  const g=v==='gallery';
   $('#gallery').style.display=g?'flex':'none';$('#parts').style.display=g?'none':'flex';$('#hud').style.display=g?'none':($('#labels').checked?'block':'none');
   if(g){gal.sig=filterSig();buildGallery(false);}
-  else{disposeTiles();if(cur)preview(cur);}
+  else{
+    disposeTiles();
+    // A click on a list row/gallery tile must open that exact selection in single-view.
+    // Do not first reload the previously selected model, which can cause stale async work.
+    const target=targetId!==null&&targetId!==undefined?targetId:cur;
+    if(target!==null&&target!==undefined){currentTab==='items'?previewItem(target):preview(target);}
+  }
 }
+async function switchMainTab(tab){
+  if(tab===currentTab)return;
+  if(tab==='items'){
+    try{await loadItemIndex();}catch(e){toast('Không tải được thư viện Item: '+e.message,1);return;}
+  }
+  tabQuery[currentTab]=$('#q').value;
+  tabCur[currentTab]=cur;
+  currentTab=tab;
+  cur=tabCur[tab]||null;
+  $('#q').value=tabQuery[tab]||'';
+  $('#tabModels').classList.toggle('active',tab==='models');
+  $('#tabItems').classList.toggle('active',tab==='items');
+  $('#tabModels').setAttribute('aria-pressed',String(tab==='models'));
+  $('#tabItems').setAttribute('aria-pressed',String(tab==='items'));
+  $('#hidefx').parentElement.style.display=tab==='models'?'flex':'none';
+  $('#minparts').parentElement.style.display=tab==='models'?'flex':'none';
+  document.querySelector('input[name=view][value=gallery]').parentElement.style.display='flex';
+  if(view==='gallery'){
+    gal.sig='';
+    $('#gallery').style.display='flex';$('#parts').style.display='none';$('#hud').style.display='none';
+    disposeTiles();
+  }
+  if(cur){
+    tab==='items'?previewItem(cur):preview(cur);
+  }else{
+    ++token;clearParts();parts=[];curBP=null;infoBase='';selPart=null;renderChips();layout(true);
+    $('#info').textContent=tab==='items'?'Chọn một item ở danh sách bên trái để xem preview 3D.':'Chọn một model ở danh sách bên trái để xem preview 3D.';
+  }
+  render();
+}
+$('#tabModels').addEventListener('click',()=>switchMainTab('models'));
+$('#tabItems').addEventListener('click',()=>switchMainTab('items'));
 const filterSig=()=>[$('#q').value,$('#hidefx').checked,$('#minparts').value].join('|');
 const _render=render;
 render=function(){_render();if(view==='gallery'){const s=filterSig();if(s!==gal.sig){gal.sig=s;buildGallery(true);}else syncTiles();}};
@@ -1235,10 +1152,11 @@ $('#gwrap').addEventListener('mouseover',e=>{const el=e.target.closest('.tile');
 $('#gwrap').addEventListener('mouseleave',()=>{gal.hover=null;});
 $('#gwrap').addEventListener('click',e=>{
   const el=e.target.closest('.tile');if(!el)return;const id=el.dataset.id;
-  if(e.target.classList.contains('tcb')){e.target.checked?sel.add(id):sel.delete(id);saveSel();updateCount();
-    const f=D.byId[id].fam,fe=document.querySelector(`.fam[data-f="${CSS.escape(f)}"] .fcb`);if(fe){const m=groups.get(f)||[],n=m.filter(x=>sel.has(x.id)).length;fe.checked=n==m.length;fe.indeterminate=n>0&&n<m.length;}
-    const rc=document.querySelector(`.row[data-id="${CSS.escape(id)}"] .cb`);if(rc)rc.checked=sel.has(id);return;}
-  document.querySelector('input[name=view][value=single]').checked=true;setView('single');preview(id);
+  if(e.target.classList.contains('tcb')){
+    const selection=activeSel();e.target.checked?selection.add(id):selection.delete(id);
+    currentTab==='models'?saveSel():saveItemSel();syncTiles();render();return;
+  }
+  setView('single',id);
 });
 const pageTo=p=>{gal.page=p;buildGallery(false);};
 $('#gfirst').onclick=()=>pageTo(0);$('#gprev').onclick=()=>pageTo(Math.max(0,gal.page-1));
@@ -1246,26 +1164,78 @@ $('#gnext').onclick=()=>pageTo(gal.page+1);$('#glast').onclick=()=>pageTo(1e6);
 $('#gsize').onchange=e=>{gal.size=+e.target.value;buildGallery(true);};
 $('#gtickpage').onclick=()=>{gal.tiles.forEach(t=>sel.add(t.id));saveSel();syncTiles();updateCount();render();};
 document.querySelectorAll('input[name=view]').forEach(r=>r.onchange=()=>setView(r.value));
-document.querySelectorAll('input[name=mode]').forEach(r=>r.onchange=()=>{view==='gallery'?relayoutTiles():layout(true);});
+
+/* ----------------------------------------------- bố cục tự xếp + chỉnh tay */
+const layCache=new Map();
+async function getLay(id){
+  if(!D.lays.has(id))return null;
+  if(!layCache.has(id))layCache.set(id,await j('/api/layout?id='+encodeURIComponent(id)));
+  return layCache.get(id);
+}
+let selPart=null;
+const selBox=new THREE.Box3Helper(new THREE.Box3(),0xffd43b);selBox.visible=false;scene.add(selBox);
+function updSel(){
+  if(!selPart||view!=='single'||curMode()==='grid'&&false){selBox.visible=false;return;}
+  root.updateMatrixWorld(true);selBox.box.setFromObject(selPart.group);selBox.visible=selPart.visible;
+}
+function selectPart(p){selPart=p;fillEditor();updSel();}
+function fillEditor(){
+  const ids=['ex','ey','ez','erx','ery','erz'];
+  if(!selPart){$('#edname').textContent='Chọn một mảnh (bấm vào hình hoặc tên mảnh)';ids.forEach(i=>$('#'+i).value='');return;}
+  $('#edname').textContent='Mảnh: '+selPart.name;
+  [...selPart.tf.pos,...selPart.tf.rot].forEach((v,i)=>$('#'+ids[i]).value=v);
+}
+['ex','ey','ez','erx','ery','erz'].forEach((id,i)=>$('#'+id).oninput=e=>{
+  if(!selPart)return;const v=parseFloat(e.target.value)||0;
+  if(i<3)selPart.tf.pos[i]=v;else selPart.tf.rot[i-3]=v;
+  selPart.group.matrixAutoUpdate=false;selPart.group.matrix.copy(manMat(selPart.tf));selPart.group.matrixWorldNeedsUpdate=true;updSel();
+});
+function edMsg(t){$('#edmsg').textContent=t;clearTimeout(edMsg.t);edMsg.t=setTimeout(()=>$('#edmsg').textContent='',6000);}
+$('#edpreset').onclick=()=>{
+  const mats=bpMats(skTree());let n=0;
+  parts.forEach(p=>{const k=skKey(p.name,cur),M=k&&mats.get(k);if(M){p.tf=tfFromMat(M);n++;}});
+  layout(true);fillEditor();edMsg(`Đã đặt ${n}/${parts.length} mảnh theo bộ xương người (đoán). Các mảnh còn lại chưa biết vị trí - tự chỉnh tay.`);
+};
+$('#edbp').onclick=()=>{
+  if(!curBP)return edMsg('Chưa có blueprint cho model này - bấm "Nạp blueprint…".');
+  const mats=bpMats(curBP);let n=0;
+  parts.forEach(p=>{const M=mats.get(bn(p.name));if(M){p.tf=tfFromMat(M);n++;}});
+  layout(true);fillEditor();edMsg(`Đã lấy ${n}/${parts.length} mảnh từ blueprint.`);
+};
+$('#edreset').onclick=()=>{parts.forEach(p=>p.tf={pos:[0,0,0],rot:[0,0,0]});layout(true);fillEditor();};
+$('#edsave').onclick=async()=>{
+  if(!cur)return;const o={};parts.forEach(p=>{if(p.tf.pos.some(v=>v)||p.tf.rot.some(v=>v))o[p.name]={pos:p.tf.pos,rot:p.tf.rot};});
+  try{await j('/api/layout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:cur,parts:o})});
+    D.lays.add(cur);layCache.set(cur,{parts:o});edMsg(`Đã lưu bố cục (${Object.keys(o).length} mảnh) trên trình duyệt này.`);}catch(e){edMsg('Lỗi lưu: '+e.message);}
+};
+$('#eddel').onclick=async()=>{
+  if(!cur)return;try{await j('/api/layout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:cur,parts:null})});
+    D.lays.delete(cur);layCache.delete(cur);edMsg('Đã xóa bố cục đã lưu.');}catch(e){edMsg('Lỗi: '+e.message);}
+};
+/* bấm vào hình để chọn mảnh */
+const ray=new THREE.Raycaster(),mv=new THREE.Vector2();let dn=null;
+cv.addEventListener('pointerdown',e=>dn=[e.clientX,e.clientY]);
+cv.addEventListener('pointerup',e=>{
+  if(!dn||view!=='single'||curMode()!=='manual')return;
+  if(Math.hypot(e.clientX-dn[0],e.clientY-dn[1])>4)return;
+  const r=cv.getBoundingClientRect();mv.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);
+  ray.setFromCamera(mv,cam);root.updateMatrixWorld(true);
+  const hit=ray.intersectObjects(root.children,true).find(h=>h.object.visible);
+  if(!hit){selPart=null;fillEditor();updSel();renderChips();return;}
+  let o=hit.object;while(o&&o.parent!==root)o=o.parent;
+  const p=parts.find(q=>q.group===o);if(p){selectPart(p);renderChips();}
+});
 
 /* ----------------------------------------------- điều khiển chung */
-function setSide(hide,persist=true){
-  const mobile=matchMedia('(max-width: 760px)').matches,aside=$('#modelPanel');
-  if(mobile){document.body.classList.toggle('drawer-open',!hide);aside.style.display='';
-    $('#btnSide').textContent=hide?'☰ Danh sách':'Đóng danh sách';document.body.style.overflow=hide?'':'hidden';
-    $('#btnSide').setAttribute('aria-expanded',String(!hide));}
-  else{document.body.classList.remove('drawer-open');document.body.style.overflow='';aside.style.display=hide?'none':'flex';
-    $('#btnSide').textContent=hide?'▶ Hiện danh sách':'◀ Ẩn danh sách';$('#btnSide').setAttribute('aria-expanded',String(!hide));
-    if(persist)try{localStorage.setItem('vg_hide',hide?'1':'0');}catch(e){}}
+function setSide(hide){
+  document.querySelector('aside').style.display=hide?'none':'flex';
+  $('#btnSide').textContent=hide?'▶ Hiện danh sách':'◀ Ẩn danh sách';
+  try{localStorage.setItem('vg_hide',hide?'1':'0');}catch(e){}
   setTimeout(()=>{resize();gal.dirty=true;},30);
 }
-$('#btnSide').onclick=()=>setSide(matchMedia('(max-width: 760px)').matches?!document.body.classList.contains('drawer-open'):$('#modelPanel').style.display!=='none');
-$('#drawerClose').onclick=()=>setSide(true,false);
-$('#drawerShade').onclick=()=>setSide(true,false);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('drawer-open'))setSide(true,false);});
-const sideQuery=matchMedia('(max-width: 760px)');
-sideQuery.addEventListener('change',e=>{let hidden=false;try{hidden=localStorage.getItem('vg_hide')==='1';}catch(x){}setSide(e.matches?true:hidden,false);});
-try{setSide(matchMedia('(max-width: 760px)').matches?true:localStorage.getItem('vg_hide')==='1',false);}catch(e){setSide(matchMedia('(max-width: 760px)').matches,true);}
+$('#btnSide').onclick=()=>setSide(document.querySelector('aside').style.display!=='none');
+try{if(localStorage.getItem('vg_hide')==='1')setSide(true);}catch(e){}
+document.querySelectorAll('input[name=mode]').forEach(r=>r.onchange=()=>{view==='gallery'?relayoutTiles():layout(true);});
 $('#bprot').onchange=$('#bp8').onchange=()=>{view==='gallery'?relayoutTiles():layout(true);};
 $('#frame').onchange=()=>layout();$('#refit').onclick=()=>fitCam();
 $('#labels').onchange=()=>{$('#hud').style.display=$('#labels').checked&&view==='single'?'block':'none';};
@@ -1285,12 +1255,9 @@ $('#bpfile').onchange=async e=>{
     if(view==='gallery'){gal.tiles.forEach(t=>t.bp=null);await Promise.all(gal.tiles.map(async t=>t.bp=await getBP(t.id)));relayoutTiles();}else if(cur)preview(cur);}
 };
 new ResizeObserver(resize).observe($('#stage'));
-cv.addEventListener('webglcontextlost',e=>{e.preventDefault();$('#loader').style.display='flex';$('#prog').style.display='none';$('#manual').style.display='none';$('#autonote').textContent='WebGL đã bị dừng, thường do thiết bị thiếu tài nguyên. Tải lại trang hoặc đóng bớt ứng dụng rồi thử lại.';$('#pst').textContent='Mất kết nối với bộ dựng 3D.';});
 const tmpv=new THREE.Vector3();
 (function loop(){
-  if(!renderer)return;
   requestAnimationFrame(loop);
-  if(document.hidden||!document.body.classList.contains('tab-model'))return;
   if(view==='gallery'){galRender();return;}
   placeCam(cam,orb);renderer.render(scene,cam);
   if(labelEls.length&&$('#labels').checked){const r=cv.getBoundingClientRect();
@@ -1299,11 +1266,5 @@ const tmpv=new THREE.Vector3();
       el.style.left=((tmpv.x+1)/2*r.width)+'px';el.style.top=((1-tmpv.y)/2*r.height)+'px';});}
 })();
 window.__vg={orb,parts:()=>parts,preview,gal,bpMats};
-if(renderer){
-  if(sessionStorage.getItem('vg_noauto')==='1'){
-    document.body.classList.add('tab-model');
-    LOCAL.boot(()=>{modelInitPromise=init();return modelInitPromise;});
-  }
-  else setTab('model');
-}
+LOCAL.boot(()=>init().catch(e=>toast('Không tải được danh sách: '+e.message,1)));
 </script></body></html>

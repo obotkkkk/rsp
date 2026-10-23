@@ -1,76 +1,57 @@
-# VanGioi Mob Studio – bản web (pack nằm cùng host)
+# VanGioi Mob Studio – website Model / Item
 
-Người dùng chỉ cần **mở web → tick quai/boss → Tạo ZIP**. Web tự tải dữ liệu model từ thư mục `pack/` ngay trên host,
-không ai phải tìm hay chọn file pack. Mọi xử lý chạy trong trình duyệt người dùng; host **không** nhận hay lưu file ZIP của ai.
+Website tĩnh chạy trong trình duyệt. Tab **Model** tải danh sách model từ pack nguồn, cho xem 3D, lắp ráp/blueprint và tạo ZIP các model đã tick. Tab **Item** đọc index Item RSP được build sẵn, tải chi tiết theo nhóm khi cần và xem preview 3D của từng item. Bộ lọc, nhóm mở rộng, trạng thái tick và mục đang xem của hai tab được tách riêng.
 
-## Cấu trúc
-```
+Các nút **Thank** và **Wiki** mở lần lượt `https://github.com/obotkkkk` và `https://vangioiwiki.netlify.app/`. Chức năng **Tạo ZIP** áp dụng theo tab đang mở, bao gồm Model và Item.
+
+## Cấu trúc chính
+
+```text
 index.html
 .nojekyll
-lib/            three.min.js, fflate.min.js
-VanGioi_Full_Pack.zip                      <- ZIP nguồn để chạy lại generator; không bắt buộc đưa lên host
-pack/data/       manifest.json, version.json, items/, models/, sounds/, resources/, assets/auxiliary.zip
-pack/blueprint.json                         <- tuỳ chọn: thứ tự/nhóm model cho tab Model
-pack/mobs.zip.001, mobs.zip.002             <- pack cũ, chỉ dùng khi chọn “Dùng pack khác…”
-tools/build_web_data.py                     <- tách dữ liệu theo tab từ ZIP nguồn
-tools/make_pack.py                           <- tạo pack ZIP cũ cho chế độ tương thích
-names.json      (tuỳ chọn) tên hiển thị trong game cho mọi người
+lib/                         three.min.js, fflate.min.js
+blueprints/                  .bbmodel tuỳ chọn + index.json
+pack/mobs.zip.001, .002      dữ liệu Full RSP rút gọn cho tab Model
+pack/data/items/index.json   index nhóm/item từ Item RSP
+pack/data/items/*.json       chi tiết item theo nhóm, tải theo nhu cầu
+pack/data/resources/         texture đã chuẩn hoá cho preview item
+tools/build_web_data.py      tạo dữ liệu tĩnh cho web từ Full RSP + Item RSP
+tools/make_pack.py           công cụ tạo pack Model gọn để chạy web
 ```
 
-## Đưa lên GitHub Pages (miễn phí)
-1. Tạo repo mới (Public).
-2. Upload **toàn bộ** thư mục này (kể cả `pack/` và `.nojekyll`). Mỗi phần pack ≤ 20 MB nên upload qua web được (GitHub web giới hạn 25 MB/file).
-   *Nếu dùng git: `git add . && git commit -m web && git push`.*
-3. *Settings → Pages → Deploy from a branch → main / (root) → Save.* Sau ~1 phút có địa chỉ `https://<tên-bạn>.github.io/<tên-repo>/`.
+## Triển khai
 
-Cloudflare Pages / Netlify: kéo thả cả thư mục (mỗi file < 25 MB nên đều qua được).
+Đưa toàn bộ nội dung trong `dist/VanGioi_Web_SRC.zip` lên host tĩnh hoặc giải nén thư mục triển khai rồi phục vụ bằng HTTP(S). Không mở bằng `file://`: trình duyệt cần HTTP(S) để fetch index, dữ liệu item và texture.
 
-## Khi server cập nhật pack
-Tạo lại bộ dữ liệu tĩnh dùng cho ba tab bằng lệnh sau từ thư mục dự án:
-```
+## Thêm blueprint `.bbmodel`
+
+Đặt file cạnh website tại `blueprints/<model-id>.bbmodel`. Tên file (không tính đuôi `.bbmodel`) phải trùng ID model trong danh sách, ví dụ `abyss_charge.bbmodel`. Website thử đọc `blueprints/index.json`; nếu danh sách rỗng/không có manifest, website thử tự quét `/blueprints/` khi host cho phép directory listing. Với host tắt directory listing, ghi rõ tên file vào `blueprints/index.json`. Nếu không có thư mục/file hoặc blueprint lỗi, website tự bỏ qua. Hướng dẫn chi tiết nằm trong [`blueprints/README.md`](blueprints/README.md) và [`BLUEPRINTS_HUONG_DAN.md`](BLUEPRINTS_HUONG_DAN.md).
+
+## Build lại dữ liệu
+
+Đặt hai file nguồn cạnh script:
+- `VanGioi_Full_Pack.zip`
+- `VanGioi_Item_Only.zip`
+
+Chạy:
+
+```bash
 python3 tools/build_web_data.py
 ```
-Mặc định đọc `VanGioi_Full_Pack.zip` cạnh `index.html` và chỉ thay thư mục `pack/data/` do script quản lý. ZIP nguồn không bị sửa. Script dùng `RawZip` vì pack server có CRC/size/local-header metadata giả; payload được kiểm tra bằng giải nén thực và JSON parse. Mọi tài nguyên chưa được phân loại được giữ trong `pack/data/assets/auxiliary.zip`.
 
-Upload toàn bộ `pack/data/` sau khi build. Tab Model tải `version.json` và model index; shard model cùng texture chỉ tải khi xem/render hoặc tạo ZIP. Tab Item và Âm thanh chỉ tải index khi mở; shard Item tải khi bung nhóm, còn audio tải khi bấm nghe/tải.
-
-Blueprint host là tuỳ chọn, đặt tại `pack/blueprint.json`:
-```
-{
-   "version": 1,
-   "models": [
-      {"id": "abyssal_charge", "group": "abyssal", "order": 1}
-   ]
-}
-```
-`id` phải trùng ID model ở `pack/data/models/index.json`; model không khai báo vẫn xuất hiện sau các mục được sắp xếp. File thiếu/sai schema được bỏ qua; bản hợp lệ gần nhất có thể dùng từ IndexedDB khi mạng lỗi.
-
-Static host cần phục vụ đúng đường dẫn tương đối và MIME JSON/PNG/OGG. Dùng HTTPS cho host công khai; `version.json` được revalidate, các file dữ liệu còn lại dùng URL có build ID để cache không giữ nhầm phiên bản cũ. Website không gửi tên, layout hay file người dùng lên server.
-
-Để tạo riêng pack ZIP tương thích cũ, vẫn có thể chạy:
-```
-python3 tools/make_pack.py VanGioi_Full_Pack.zip
-```
-Lệnh này ghi lại `pack/mobs.zip.001, .002…` (đã bỏ phần đồ vật/HUD không cần, sửa luôn checksum PNG). Upload các file mới lên host.
-Dùng thẳng Full pack cũng được: đặt `pack/VanGioi_Full_Pack.zip` (83 MB, GitHub cho phép < 100 MB, nhưng tải nặng hơn ~3 lần).
-
-## Tên hiển thị trong game (tuỳ chọn)
-Sau khi chạy `python3 tools/build_web_data.py`, mở `pack/data/names.json` để điền nhãn cho Model, Item/part, Sound hoặc sound event. File được tạo từ ID thật trong RSP; giá trị `""` nghĩa là tiếp tục hiển thị ID. Ví dụ:
-```
-{
-   "schemaVersion": 1,
-   "models": {"abyssal_charge": "Tên mob hiển thị"},
-   "items": {"penitent_phase_3/blood_sword": "Kiếm máu"},
-   "sounds": {"assassin_skills:assasin_attack": "Đòn đánh sát thủ"},
-   "soundEvents": {"assassin_skills:assasin_attack": "Sự kiện đòn đánh"}
-}
-```
-Chỉ cần sửa giá trị, giữ nguyên các ID. Chạy lại generator để cập nhật manifest/build ID; tên đã điền sẽ được bảo toàn nếu ID còn trong pack. Upload lại `pack/data/`. Tên do người dùng nhập trực tiếp trong web vẫn có ưu tiên cao hơn tên trong file này.
-
-Các công cụ nhập/xuất tên trong UI vẫn dùng `names.json` phẳng tùy chọn cạnh `index.html`; file đó chỉ override nhãn Model, không thay schema grouped `pack/data/names.json`.
+Công cụ tạo dữ liệu model/item/audio và ZIP triển khai trong `dist/`. Những file trong thư mục `blueprints/` được đưa vào ZIP triển khai khi build. Không tự bù mục bị thiếu; các tham chiếu thiếu phải được xem trong báo cáo build. Nên giữ lại `BUILD_REPORT.json` để đối chiếu số lượng nguồn/đầu ra.
 
 ## Lưu ý
-- Mỗi người dùng tải ~29 MB lần đầu (trình duyệt/CDN cache cho lần sau). GitHub Pages có giới hạn băng thông mềm ~100 GB/tháng ≈ 3.000 lượt tải lần đầu.
-- Pack thuộc về server của bạn – chỉ nên đưa lên host công khai nếu bạn được phép phân phối.
-- Nếu không tải được `pack/` (mở file trực tiếp, host lỗi…), web tự cho người dùng chọn file pack của họ.
-- Yêu cầu trình duyệt bản mới có WebGL, ~1 GB RAM trống.
+
+- Trang cần trình duyệt hiện đại hỗ trợ WebGL.
+- Lần đầu tab Model tải pack chia phần; tab Item đọc index khi được mở và chỉ fetch JSON nhóm khi cần.
+- Texture item được nạp từ `pack/data/resources/` khi không có trong Full RSP.
+- Chỉ công khai pack/blueprint nếu bạn có quyền phân phối dữ liệu đó.
+
+## Giới hạn bảo vệ mã nguồn và RSP
+
+ZIP triển khai áp dụng lớp cản cơ bản cho menu chuột phải/phím tắt xem mã nguồn; khi môi trường build có Node.js và TypeScript, JavaScript inline được parse rồi compact để bỏ định dạng/comment. Nếu thiếu parser, script giữ nguyên JavaScript để tránh làm hỏng cú pháp. Đây chỉ là biện pháp gây khó cho việc xem nhanh; mã JavaScript vẫn phải gửi tới trình duyệt nên người có kinh nghiệm vẫn có thể lấy và phân tích được. Không dùng cơ chế vòng lặp `debugger` hoặc khóa trình duyệt để tránh làm treo trang.
+
+RSP được tạo từ lựa chọn Model và Item vẫn dùng cấu trúc ZIP/resource path mà Minecraft vanilla cần. Sau khi tạo, website cố ý đổi CRC trong local header và central directory của ZIP, nhưng **không đổi byte dữ liệu model/JSON/texture**. Vì vậy, các công cụ xác minh CRC thường báo `Bad CRC` khi kiểm tra/giải nén; kiểm thử mẫu cho thấy Java `ZipFile` và ZIP filesystem vẫn đọc được nội dung. Dẫu vậy, chưa có kiểm thử trực tiếp trong phiên Minecraft đang chạy — hãy thử pack nhỏ trước khi phát hành rộng.
+
+Đây chỉ là cách gây khó, không phải mã hóa: một công cụ bỏ qua CRC, sửa CRC hoặc giải nén rồi đóng gói lại vẫn có thể lấy dữ liệu. Một số trình giải nén có thể vẫn giữ lại file dù hiển thị lỗi CRC. ZIP nguồn được website tải làm đầu vào (`pack/mobs.zip.*`) vẫn giữ CRC hợp lệ; chỉ RSP đầu ra do nút **Tạo ZIP** tạo cho Model/Item mới được áp dụng CRC sai có chủ đích.
