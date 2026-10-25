@@ -1,0 +1,36 @@
+{
+  "source_files": {
+    "catalog": "catalog.json",
+    "current_mapping": "model_names.json",
+    "server_pack_archive": "packs.7z"
+  },
+  "catalog_entries": 8383,
+  "catalog_model_vfx_entries": 1480,
+  "catalog_item_path_ids": 6067,
+  "catalog_sound_entries": 833,
+  "generated": {
+    "models": {
+      "count": 1480,
+      "names_different_from_id": 1395
+    },
+    "items": {
+      "count": 4049,
+      "names_different_from_id": 4049
+    },
+    "sounds": {
+      "count": 887,
+      "names_different_from_id": 887
+    }
+  },
+  "names_json_count": 1480,
+  "model_names_ids_not_in_catalog": [],
+  "item_ids_matched_to_catalog": 4045,
+  "sound_ids_matched_to_catalog": 37,
+  "files": {
+    "master": "model_names_mapped.json",
+    "website_names": "names.json",
+    "csv": "model_id_name_map.csv",
+    "package": "VanGioi_Model_Name_Mapping.zip"
+  },
+  "zip_test": "passed"
+}

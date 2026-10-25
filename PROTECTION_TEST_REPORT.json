@@ -1,0 +1,106 @@
+{
+  "zip": "VanGioi_Web_SRC_bad_crc.zip",
+  "ok": true,
+  "checks": {
+    "zip_crc": true,
+    "required_files": true,
+    "no_build_tools_or_source_rsp": true,
+    "basic_guard": true,
+    "no_source_map": true,
+    "bad_crc_output_hooks": true,
+    "hosted_pack_crc": true,
+    "inline_js_syntax": true,
+    "source_model_and_item_bad_crc_test": true,
+    "production_model_and_item_bad_crc_test": true,
+    "deploy_archive_zip_crc": true
+  },
+  "errors": [],
+  "counts": {
+    "deploy_entries": 7991,
+    "item_groups": 112,
+    "items": 4049,
+    "hosted_model_json_entries": 19959,
+    "split_pack_parts": 2
+  },
+  "generated_rsp": {
+    "model_sync_zip": {
+      "ok": true,
+      "checks": {
+        "both_web_zip_generators": true,
+        "unzip_reports_bad_crc_for_both": true,
+        "java_test_compile": true,
+        "java_zipfile_and_zipfs_can_read_both": true
+      },
+      "notes": [
+        "Đã kiểm tra luồng tạo ZIP đồng bộ (Model) và bất đồng bộ (Item).",
+        "Chỉ kiểm tra Java ZipFile/ZipFS; chưa khởi chạy Minecraft client thật.",
+        "Bad CRC chỉ gây lỗi với trình giải nén xác minh CRC; dữ liệu vẫn có thể được trích xuất/repack.",
+        "Không phải mã hóa và không đảm bảo chống sao chép tuyệt đối."
+      ],
+      "errors": [],
+      "unzip_bad_crc": {
+        "model": true,
+        "item": true
+      },
+      "java_readable": {
+        "model": true,
+        "item": true
+      }
+    },
+    "item_async_zip": {
+      "ok": true,
+      "checks": {
+        "both_web_zip_generators": true,
+        "unzip_reports_bad_crc_for_both": true,
+        "java_test_compile": true,
+        "java_zipfile_and_zipfs_can_read_both": true
+      },
+      "notes": [
+        "Đã kiểm tra luồng tạo ZIP đồng bộ (Model) và bất đồng bộ (Item).",
+        "Chỉ kiểm tra Java ZipFile/ZipFS; chưa khởi chạy Minecraft client thật.",
+        "Bad CRC chỉ gây lỗi với trình giải nén xác minh CRC; dữ liệu vẫn có thể được trích xuất/repack.",
+        "Không phải mã hóa và không đảm bảo chống sao chép tuyệt đối."
+      ],
+      "errors": [],
+      "unzip_bad_crc": {
+        "model": true,
+        "item": true
+      },
+      "java_readable": {
+        "model": true,
+        "item": true
+      }
+    },
+    "production_build_test": {
+      "ok": true,
+      "checks": {
+        "both_web_zip_generators": true,
+        "unzip_reports_bad_crc_for_both": true,
+        "java_test_compile": true,
+        "java_zipfile_and_zipfs_can_read_both": true
+      },
+      "notes": [
+        "Đã kiểm tra luồng tạo ZIP đồng bộ (Model) và bất đồng bộ (Item).",
+        "Chỉ kiểm tra Java ZipFile/ZipFS; chưa khởi chạy Minecraft client thật.",
+        "Bad CRC chỉ gây lỗi với trình giải nén xác minh CRC; dữ liệu vẫn có thể được trích xuất/repack.",
+        "Không phải mã hóa và không đảm bảo chống sao chép tuyệt đối."
+      ],
+      "errors": [],
+      "unzip_bad_crc": {
+        "model": true,
+        "item": true
+      },
+      "java_readable": {
+        "model": true,
+        "item": true
+      }
+    },
+    "crc_behavior": "unzip reports Bad CRC after the CRC fields in both ZIP local headers and central directory are changed; payload bytes remain unchanged"
+  },
+  "limitations": [
+    "Minecraft client was not launched in this environment; the pack has not been live-tested in game.",
+    "Java ZipFile and Java ZIP filesystem smoke tests read entry bytes, but this does not guarantee all Minecraft versions or non-Java tools ignore CRC.",
+    "Bad CRC is not encryption. Some tools may still save/extract data; CRC can be ignored or repaired and ZIP can be repacked.",
+    "Only RSP ZIPs created by the website Model/Item “Tạo ZIP” flows are modified. Hosted input pack segments and the deploy ZIP itself retain valid CRCs."
+  ]
+}
